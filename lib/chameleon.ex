@@ -1,4 +1,6 @@
 defmodule Chameleon do
+  alias Chameleon.{Hex, Rgb, Cmyk, Patone, Keyword, Hsl}
+
   @moduledoc """
   Chameleon
   --------------------------------------------------------------------------

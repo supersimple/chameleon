@@ -1,21 +1,37 @@
 # Chameleon
 
-**TODO: Add description**
+Chameleon is a utility that converts colors from one model to another.
+It currently supports: Hex, RGB, CMYK, HSL, Pantone, and Keywords.
+
+## Use
+Conversion requires a color value, an input color model, and an output
+color model.
+Example: `Chameleon.convert("FFFFFF", :hex, :rgb) -> {255, 255, 255}`
+
+If a translation cannot be made, the response will be an error tuple with
+the input value returned.
+Example: `Chameleon.convert("F69292", :hex, :pantone) -> {:error, "F69292"}`
+
+In this example, there is no pantone value that matches that hex value, but
+an error could also be caused by a bad input value;
+Example: `Chameleon.convert("Reddish-Blue", :keyword, :hex)`
+
+or an input color model that does not conform with the value passed in:
+Example: `Chameleon.convert({42, 42, 42}, :cmyk, :hex)`
 
 ## Installation
 
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `chameleon` to your list of dependencies in `mix.exs`:
+The package can be installed by adding `chameleon` to your list of dependencies in `mix.exs`:
 
 ```elixir
 def deps do
   [
-    {:chameleon, "~> 0.1.0"}
+    {:chameleon, "~> 1.0.0"}
   ]
 end
 ```
-
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at [https://hexdocs.pm/chameleon](https://hexdocs.pm/chameleon).
-
+## Contribution
+Contributions are welcomed. Please open a pull request or file an issue with your ideas.
+Some ideas would be:
+ * add a new color model for conversion
+ * add functionality to generate complementary colors
