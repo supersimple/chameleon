@@ -1,6 +1,5 @@
 defmodule Chameleon do
   alias Chameleon.{Hex, Rgb, Cmyk, Patone, Keyword, Hsl}
-
   @moduledoc """
   Chameleon
   --------------------------------------------------------------------------
@@ -9,7 +8,7 @@ defmodule Chameleon do
   ## Use
   Conversion requires a color value, an input color model, and an output
   color model.
-  Example: `Chameleon.convert("FFFFFF", :hex, :rgb) -> {255, 255, 255}`
+  Example: `Chameleon.convert("FFFFFF", :hex, :rgb) -> {:ok, %{r: 255, g: 255, b: 255}}`
 
   If a translation cannot be made, the response will be an error tuple with
   the input value returned.
@@ -28,15 +27,15 @@ defmodule Chameleon do
 
   ## Examples
     iex> Chameleon.convert("000000", :hex, :keyword)
-    "black"
+    {:ok, "black"}
 
     iex> Chameleon.convert("black", :keyword, :cmyk)
-    {0, 0, 0, 255}
+    {:ok, %{c: 0, m: 0, y: 0, k: 255}}
 
     iex> Chameleon.convert({0, 0, 0}, :hex, :pantone)
     {:error, {0, 0, 0}}
   """
-  def convert(value, input_model, output_model) do
-
+  def convert(value, _input_model, _output_model) do
+    Hex.to_keyword(value)
   end
 end

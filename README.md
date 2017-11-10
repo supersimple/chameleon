@@ -6,7 +6,7 @@ It currently supports: Hex, RGB, CMYK, HSL, Pantone, and Keywords.
 ## Use
 Conversion requires a color value, an input color model, and an output
 color model.
-Example: `Chameleon.convert("FFFFFF", :hex, :rgb) -> {255, 255, 255}`
+Example: `Chameleon.convert("FFFFFF", :hex, :rgb) -> {:ok, %{r: 255, g: 255, b: 255}}`
 
 If a translation cannot be made, the response will be an error tuple with
 the input value returned.
