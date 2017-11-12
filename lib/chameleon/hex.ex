@@ -1,4 +1,5 @@
 defmodule Chameleon.Hex do
+  alias Chameleon.{Rgb, Cmyk, Pantone, Keyword, Hsl}
 
   @spec to_rgb(charlist) :: list(integer)
   def to_rgb(hex) do
@@ -10,13 +11,35 @@ defmodule Chameleon.Hex do
   @spec to_keyword(charlist) :: charlist
   def to_keyword(hex) do
     long_hex = convert_short_hex_to_long_hex(hex)
-    IO.puts long_hex
     keyword_to_hex_map()
     |> Enum.find(fn {_k, v} -> v == String.downcase(long_hex) end)
     |> case do
          {keyword, _hex} -> keyword
          _ -> {:error, "No keyword match could be found for that hex value."}
     end
+  end
+
+  @spec to_hsl(charlist) :: list(integer)
+  def to_hsl(hex) do
+    to_rgb(hex)
+    |> Rgb.to_hsl
+  end
+
+  @spec to_pantone(charlist) :: charlist
+  def to_pantone(hex) do
+    long_hex = convert_short_hex_to_long_hex(hex)
+    pantone_to_hex_map()
+    |> Enum.find(fn {_k, v} -> v == String.upcase(long_hex) end)
+    |> case do
+         {pantone, _hex} -> pantone
+         _ -> {:error, "No keyword match could be found for that hex value."}
+    end
+  end
+
+  @spec to_cmyk(charlist) :: list(integer)
+  def to_cmyk(hex) do
+    to_rgb(hex)
+    |> Rgb.to_cmyk
   end
 
   defp do_to_rgb(list) when length(list) == 6 do
@@ -31,6 +54,12 @@ defmodule Chameleon.Hex do
 
   defp keyword_to_hex_map do
     Code.eval_file("lib/chameleon/keyword_to_hex.exs")
+    |> Tuple.to_list
+    |> Enum.at(0)
+  end
+
+  defp pantone_to_hex_map do
+    Code.eval_file("lib/chameleon/pantone_to_hex.exs")
     |> Tuple.to_list
     |> Enum.at(0)
   end

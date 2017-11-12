@@ -1824,65 +1824,65 @@
 "1" => "FFDFC4",
 "10" => "DB9065",
 "11" => "CE967C",
-'1162x': 'F7B50C'
+"1162x" => "F7B50C",
 "12" => "C67856",
 "13" => "BA6C49",
-'1302x': 'E29100'
+"1302x" => "E29100",
 "14" => "A57257",
 "15" => "F0C8C9",
 "16" => "DDA8A0",
-'1652x': 'EA4F00'
+"1652x" => "EA4F00",
 "17" => "B97C6D",
-'17882x': 'D62100'
+"17882x" => "D62100",
 "18" => "A8756C",
-'1852x': 'D11600'
+"1852x" => "D11600",
 "19" => "AD6452",
 "2" => "F005BE",
 "20" => "5C3836",
 "21" => "CB8442",
 "22" => "BD723C",
 "23" => "704139",
-'2392x': 'C4057C'
+"2392x" => "C4057C",
 "24" => "A3866A",
 "25" => "870400",
-'25922x': '720082'
+"25922x" => "720082",
 "26" => "710101",
 "27" => "430000",
 "28" => "5B0001",
 "29" => "302E2E",
-'2992x': '007FCC'
+"2992x" => "007FCC",
 "3" => "EECEB3",
 "30" => "000000",
-'3062x': '00A3D1'
-'3202x': '007F82'
-'3272x': '008977'
-'3682x': '009E0F'
-'3752x': '54BC00'
-'3822x': '9EC400'
+"3062x" => "00A3D1",
+"3202x" => "007F82",
+"3272x" => "008977",
+"3682x" => "009E0F",
+"3752x" => "54BC00",
+"3822x" => "9EC400",
 "4" => "E1B899",
-'4332x': '0A0C11'
-'4522x': '009944'
-'4642x': '704214'
-'4712x': 'A34402'
-'4852x': 'CC0C00'
+"4332x" => "0A0C11",
+"4522x" => "009944",
+"4642x" => "704214",
+"4712x" => "A34402",
+"4852x" => "CC0C00",
 "5" => "E5C298",
 "6" => "FFDCB2",
 "7" => "E5B887",
 "8" => "E5A073",
-'8012x': '0089AF'
-'8022x': '1CCE28'
-'8032x': 'FFD816'
-'8042x': 'FF7F1E'
-'8052x': 'F93A2B'
-'8062x': 'F7027C'
-'8072x': 'BF008C'
-'8082x': '00A087'
-'8092x': 'D6D60C'
-'8102x': 'FFBC21'
-'8112x': 'FF5416'
-'8122x': 'FC074F'
-'8132x': 'D10084'
-'8142x': '703FAF'
+"8012x" => "0089AF",
+"8022x" => "1CCE28",
+"8032x" => "FFD816",
+"8042x" => "FF7F1E",
+"8052x" => "F93A2B",
+"8062x" => "F7027C",
+"8072x" => "BF008C",
+"8082x" => "00A087",
+"8092x" => "D6D60C",
+"8102x" => "FFBC21",
+"8112x" => "FF5416",
+"8122x" => "FC074F",
+"8132x" => "D10084",
+"8142x" => "703FAF",
 "9" => "E79E6D",
 "9020" => "F1EED5",
 "9021" => "F4EAE6",
@@ -2003,113 +2003,113 @@
 "9600" => "EBEBCD",
 "9602" => "E0DFC5",
 "9603" => "E0DFC5",
-'black': '2D2926'
-'black0961': '9E978E'
-'black2': '332F21'
-'black22x': '111111'
-'black3': '212721'
-'black32x': '111114'
-'black4': '31261D'
-'black42x': '0F0F0F'
-'black5': '3E2B2E'
-'black52x': '110C0F'
-'black6': '101820'
-'black62x': '070C0F'
-'black7': '3D3935'
-'black72x': '33302B'
-'blue072': '10069F'
-'blue0821': '74D1EA'
-'brightgreen': '00B08B'
-'brightorange': 'FF5E00'
-'brightred': 'F93822'
-'coolgray1': 'D9D9D6'
-'coolgray10': '63666A'
-'coolgray11': '53565A'
-'coolgray2': 'D0D0CE'
-'coolgray3': 'C8C9C7'
-'coolgray4': 'BBBCBC'
-'coolgray5': 'B1B3B3'
-'coolgray6': 'A7A8AA'
-'coolgray7': '97999B'
-'coolgray8': '888B8D'
-'coolgray9': '75787B'
-'coolgrey1': 'D9D9D6'
-'coolgrey10': '63666A'
-'coolgrey11': '53565A'
-'coolgrey2': 'D0D0CE'
-'coolgrey3': 'C8C9C7'
-'coolgrey4': 'BBBCBC'
-'coolgrey5': 'B1B3B3'
-'coolgrey6': 'A7A8AA'
-'coolgrey7': '97999B'
-'coolgrey8': '888B8D'
-'coolgrey9': '75787B'
-'darkblue': '00239C'
-'green': '00AB84'
-'green0921': '9DE7D7'
-'green2x': '009677'
-'white': 'FFFFFF'
-'hexachromeblack': '212121'
-'hexachromecyan': '0091CC'
-'hexachromegreen': '00AB59'
-'hexachromemagenta': 'DE0082'
-'hexachromeorange': 'F57D00'
-'hexachromeyellow': 'FAE017'
-'magenta0521': 'F1B2DC'
-'mediumblue': '0084CA'
-'mediumpurple': '4E008E'
-'mediumyellow': 'FFD900'
-'neutralblack': '222223'
-'orange021': 'ED6E00'
-'pink': 'D62598'
-'processblack': '2B2926'
-'processblue': '0085CA'
-'processblue2x': '0077BF'
-'processcyan': '00A6D6'
-'processmagenta': 'D6006E'
-'processyellow': 'F5E617'
-'purple': 'BA1FB5'
-'purple2x': 'AA0096'
-'red032': 'ED2E38'
-'red0331': 'FCAEBB'
-'reflexblue': '001489'
-'reflexblue2x': '1C007A'
-'rhodaminered': 'E10098'
-'rhodaminered2x': 'D10572'
-'rubinered': 'CE0058'
-'rubinered2x': 'C6003D'
-'strongred': 'CE0056'
-'violet': '440099'
-'violet0631': 'BF9BDE'
-'violet2x': '59008E'
-'warmgray1': 'D7D2CB'
-'warmgray10': '796E65'
-'warmgray11': '6E6259'
-'warmgray2': 'CBC4BC'
-'warmgray3': 'BFB8AF'
-'warmgray4': 'B6ADA5'
-'warmgray5': 'ACA39A'
-'warmgray6': 'A59C94'
-'warmgray7': '968C83'
-'warmgray8': '8C8279'
-'warmgray9': '83786F'
-'warmgrey1': 'D7D2CB'
-'warmgrey10': '796E65'
-'warmgrey11': '6B5C4F'
-'warmgrey2': 'CBC4BC'
-'warmgrey3': 'BFB8AF'
-'warmgrey4': 'B6ADA5'
-'warmgrey5': 'ACA39A'
-'warmgrey6': 'A59C94'
-'warmgrey7': '968C83'
-'warmgrey8': '8C8279'
-'warmgrey9': '83786F'
-'warmred': 'F54029'
-'warmred2x': 'E03A00'
-'yellow': 'F7E017'
-'yellow012': 'F7D917'
-'yellow0131': 'F2F0A1'
-'yellow2x': 'FCE216'
+"black" => "2D2926",
+"black0961" => "9E978E",
+"black2" => "332F21",
+"black22x" => "111111",
+"black3" => "212721",
+"black32x" => "111114",
+"black4" => "31261D",
+"black42x" => "0F0F0F",
+"black5" => "3E2B2E",
+"black52x" => "110C0F",
+"black6" => "101820",
+"black62x" => "070C0F",
+"black7" => "3D3935",
+"black72x" => "33302B",
+"blue072" => "10069F",
+"blue0821" => "74D1EA",
+"brightgreen" => "00B08B",
+"brightorange" => "FF5E00",
+"brightred" => "F93822",
+"coolgray1" => "D9D9D6",
+"coolgray10" => "63666A",
+"coolgray11" => "53565A",
+"coolgray2" => "D0D0CE",
+"coolgray3" => "C8C9C7",
+"coolgray4" => "BBBCBC",
+"coolgray5" => "B1B3B3",
+"coolgray6" => "A7A8AA",
+"coolgray7" => "97999B",
+"coolgray8" => "888B8D",
+"coolgray9" => "75787B",
+"coolgrey1" => "D9D9D6",
+"coolgrey10" => "63666A",
+"coolgrey11" => "53565A",
+"coolgrey2" => "D0D0CE",
+"coolgrey3" => "C8C9C7",
+"coolgrey4" => "BBBCBC",
+"coolgrey5" => "B1B3B3",
+"coolgrey6" => "A7A8AA",
+"coolgrey7" => "97999B",
+"coolgrey8" => "888B8D",
+"coolgrey9" => "75787B",
+"darkblue" => "00239C",
+"green" => "00AB84",
+"green0921" => "9DE7D7",
+"green2x" => "009677",
+"white" => "FFFFFF",
+"hexachromeblack" => "212121",
+"hexachromecyan" => "0091CC",
+"hexachromegreen" => "00AB59",
+"hexachromemagenta" => "DE0082",
+"hexachromeorange" => "F57D00",
+"hexachromeyellow" => "FAE017",
+"magenta0521" => "F1B2DC",
+"mediumblue" => "0084CA",
+"mediumpurple" => "4E008E",
+"mediumyellow" => "FFD900",
+"neutralblack" => "222223",
+"orange021" => "ED6E00",
+"pink" => "D62598",
+"processblack" => "2B2926",
+"processblue" => "0085CA",
+"processblue2x" => "0077BF",
+"processcyan" => "00A6D6",
+"processmagenta" => "D6006E",
+"processyellow" => "F5E617",
+"purple" => "BA1FB5",
+"purple2x" => "AA0096",
+"red032" => "ED2E38",
+"red0331" => "FCAEBB",
+"reflexblue" => "001489",
+"reflexblue2x" => "1C007A",
+"rhodaminered" => "E10098",
+"rhodaminered2x" => "D10572",
+"rubinered" => "CE0058",
+"rubinered2x" => "C6003D",
+"strongred" => "CE0056",
+"violet" => "440099",
+"violet0631" => "BF9BDE",
+"violet2x" => "59008E",
+"warmgray1" => "D7D2CB",
+"warmgray10" => "796E65",
+"warmgray11" => "6E6259",
+"warmgray2" => "CBC4BC",
+"warmgray3" => "BFB8AF",
+"warmgray4" => "B6ADA5",
+"warmgray5" => "ACA39A",
+"warmgray6" => "A59C94",
+"warmgray7" => "968C83",
+"warmgray8" => "8C8279",
+"warmgray9" => "83786F",
+"warmgrey1" => "D7D2CB",
+"warmgrey10" => "796E65",
+"warmgrey11" => "6B5C4F",
+"warmgrey2" => "CBC4BC",
+"warmgrey3" => "BFB8AF",
+"warmgrey4" => "B6ADA5",
+"warmgrey5" => "ACA39A",
+"warmgrey6" => "A59C94",
+"warmgrey7" => "968C83",
+"warmgrey8" => "8C8279",
+"warmgrey9" => "83786F",
+"warmred" => "F54029",
+"warmred2x" => "E03A00",
+"yellow" => "F7E017",
+"yellow012" => "F7D917",
+"yellow0131" => "F2F0A1",
+"yellow2x" => "FCE216",
 "10101" => "D4D5D4",
 "10102" => "C3C5C4",
 "10103" => "B9BBBB",

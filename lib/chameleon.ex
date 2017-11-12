@@ -1,5 +1,5 @@
 defmodule Chameleon do
-  alias Chameleon.{Hex, Rgb, Cmyk, Patone, Keyword, Hsl}
+  alias Chameleon.{Hex, Rgb, Cmyk, Pantone, Keyword, Hsl}
   @moduledoc """
   Chameleon
   --------------------------------------------------------------------------
@@ -32,10 +32,27 @@ defmodule Chameleon do
     iex> Chameleon.convert("black", :keyword, :cmyk)
     {:ok, %{c: 0, m: 0, y: 0, k: 255}}
 
-    iex> Chameleon.convert({0, 0, 0}, :hex, :pantone)
-    {:error, {0, 0, 0}}
+    iex> Chameleon.convert([0, 0, 0], :hex, :pantone)
+    {:error, [0, 0, 0]}
   """
-  def convert(value, _input_model, _output_model) do
-    Hex.to_keyword(value)
+  def convert(value, input_model, output_model) do
+    Kernel.apply(input_module(input_model), convert_function(output_model), [value])
+  end
+
+  defp input_module(input_model) do
+    case input_model do
+      :rgb -> Chameleon.Rgb
+      :cmyk -> Chameleon.Cmyk
+      :hex -> Chameleon.Hex
+      :pantone -> Chameleon.Pantone
+      :keyword -> Chameleon.Keyword
+      :hsl -> Chameleon.Hsl
+      _ -> {:error, "Please pass in the input model as an atom."}
+    end
+  end
+
+  defp convert_function(output_model) do
+    "to_" <> Atom.to_string(output_model)
+    |> String.to_atom()
   end
 end
