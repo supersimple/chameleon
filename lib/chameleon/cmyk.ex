@@ -5,8 +5,8 @@ defmodule Chameleon.Cmyk do
   Converts a cmyk color to its rgb value.
 
   ## Examples
-    iex> Chameleon.Cmyk.to_rgb([100, 0, 100, 0])
-    %{r: 0, g: 255, b: 0}
+      iex> Chameleon.Cmyk.to_rgb([100, 0, 100, 0])
+      %{r: 0, g: 255, b: 0}
   """
   @spec to_rgb(list(integer)) :: list(integer)
   def to_rgb(cmyk) do
@@ -24,8 +24,8 @@ defmodule Chameleon.Cmyk do
   Converts a cmyk color to its hsl value.
 
   ## Examples
-    iex> Chameleon.Cmyk.to_hsl([100, 0, 100, 0])
-    %{h: 120, s: 100, l: 50}
+      iex> Chameleon.Cmyk.to_hsl([100, 0, 100, 0])
+      %{h: 120, s: 100, l: 50}
   """
   @spec to_hsl(list(integer)) :: list(integer)
   def to_hsl(cmyk) do
@@ -39,8 +39,8 @@ defmodule Chameleon.Cmyk do
   Converts a cmyk color to its hex value.
 
   ## Examples
-    iex> Chameleon.Cmyk.to_hex([100, 0, 100, 0])
-    "00FF00"
+      iex> Chameleon.Cmyk.to_hex([100, 0, 100, 0])
+      "00FF00"
   """
   @spec to_hex(list(integer)) :: charlist
   def to_hex(cmyk) do
@@ -54,8 +54,8 @@ defmodule Chameleon.Cmyk do
   Converts a cmyk color to its pantone value.
 
   ## Examples
-    iex> Chameleon.Cmyk.to_pantone([0, 0, 0, 100])
-    "30"
+      iex> Chameleon.Cmyk.to_pantone([0, 0, 0, 100])
+      "30"
   """
   @spec to_pantone(list(integer)) :: charlist
   def to_pantone(cmyk) do
@@ -68,8 +68,8 @@ defmodule Chameleon.Cmyk do
   Converts a cmyk color to its rgb value.
 
   ## Examples
-    iex> Chameleon.Cmyk.to_keyword([100, 0, 100, 0])
-    "lime"
+      iex> Chameleon.Cmyk.to_keyword([100, 0, 100, 0])
+      "lime"
   """
   @spec to_keyword(list(integer)) :: charlist
   def to_keyword(cmyk) do

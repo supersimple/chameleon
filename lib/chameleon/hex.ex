@@ -5,11 +5,11 @@ defmodule Chameleon.Hex do
   Converts a hex color to its rgb value.
 
   ## Examples
-    iex> Chameleon.Hex.to_rgb("FF0000")
-    %{r: 255, g: 0, b: 0}
+      iex> Chameleon.Hex.to_rgb("FF0000")
+      %{r: 255, g: 0, b: 0}
 
-    iex> Chameleon.Hex.to_rgb("F00")
-    %{r: 255, g: 0, b: 0}
+      iex> Chameleon.Hex.to_rgb("F00")
+      %{r: 255, g: 0, b: 0}
   """
   @spec to_rgb(charlist) :: list(integer)
   def to_rgb(hex) do
@@ -22,11 +22,11 @@ defmodule Chameleon.Hex do
   Converts a hex color to its keyword value.
 
   ## Examples
-    iex> Chameleon.Hex.to_keyword("FF00FF")
-    "fuchsia"
+      iex> Chameleon.Hex.to_keyword("FF00FF")
+      "fuchsia"
 
-    iex> Chameleon.Hex.to_keyword("6789FE")
-    {:error, "No keyword match could be found for that hex value."}
+      iex> Chameleon.Hex.to_keyword("6789FE")
+      {:error, "No keyword match could be found for that hex value."}
   """
   @spec to_keyword(charlist) :: charlist
   def to_keyword(hex) do
@@ -43,8 +43,8 @@ defmodule Chameleon.Hex do
   Converts a hex color to its hsl value.
 
   ## Examples
-    iex> Chameleon.Hex.to_hsl("FF0000")
-    %{h: 0, s: 100, l: 50}
+      iex> Chameleon.Hex.to_hsl("FF0000")
+      %{h: 0, s: 100, l: 50}
   """
   @spec to_hsl(charlist) :: list(integer)
   def to_hsl(hex) do
@@ -58,8 +58,8 @@ defmodule Chameleon.Hex do
   Converts a hex color to its pantone value.
 
   ## Examples
-    iex> Chameleon.Hex.to_pantone("D8CBEB")
-    "263"
+      iex> Chameleon.Hex.to_pantone("D8CBEB")
+      "263"
   """
   @spec to_pantone(charlist) :: charlist
   def to_pantone(hex) do
@@ -76,8 +76,8 @@ defmodule Chameleon.Hex do
   Converts a hex color to its cmyk value.
 
   ## Examples
-    iex> Chameleon.Hex.to_cmyk("FF0000")
-    %{c: 0, m: 100, y: 100, k: 0}
+      iex> Chameleon.Hex.to_cmyk("FF0000")
+      %{c: 0, m: 100, y: 100, k: 0}
   """
   @spec to_cmyk(charlist) :: list(integer)
   def to_cmyk(hex) do

@@ -5,8 +5,8 @@ defmodule Chameleon.Pantone do
   Converts a pantone color to its rgb value.
 
   ## Examples
-    iex> Chameleon.Pantone.to_rgb("30")
-    %{r: 0, g: 0, b: 0}
+      iex> Chameleon.Pantone.to_rgb("30")
+      %{r: 0, g: 0, b: 0}
   """
   @spec to_rgb(charlist) :: list(integer)
   def to_rgb(pantone) do
@@ -19,8 +19,8 @@ defmodule Chameleon.Pantone do
   Converts a pantone color to its cmyk value.
 
   ## Examples
-    iex> Chameleon.Pantone.to_cmyk("30")
-    %{c: 0, m: 0, y: 0, k: 100}
+      iex> Chameleon.Pantone.to_cmyk("30")
+      %{c: 0, m: 0, y: 0, k: 100}
   """
   @spec to_cmyk(charlist) :: list(integer)
   def to_cmyk(pantone) do
@@ -33,8 +33,8 @@ defmodule Chameleon.Pantone do
   Converts a pantone color to its hsl value.
 
   ## Examples
-    iex> Chameleon.Pantone.to_hsl("30")
-    %{h: 0, s: 0, l: 0}
+      iex> Chameleon.Pantone.to_hsl("30")
+      %{h: 0, s: 0, l: 0}
   """
   @spec to_hsl(charlist) :: list(integer)
   def to_hsl(pantone) do
@@ -47,8 +47,8 @@ defmodule Chameleon.Pantone do
   Converts a pantone color to its keyword value.
 
   ## Examples
-    iex> Chameleon.Pantone.to_keyword("30")
-    "black"
+      iex> Chameleon.Pantone.to_keyword("30")
+      "black"
   """
   @spec to_keyword(charlist) :: charlist
   def to_keyword(pantone) do
@@ -61,8 +61,8 @@ defmodule Chameleon.Pantone do
   Converts a pantone color to its hex value.
 
   ## Examples
-    iex> Chameleon.Pantone.to_hex("30")
-    "000000"
+      iex> Chameleon.Pantone.to_hex("30")
+      "000000"
   """
   @spec to_hex(charlist) :: charlist
   def to_hex(pantone) do

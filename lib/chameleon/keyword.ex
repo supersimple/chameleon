@@ -5,8 +5,8 @@ defmodule Chameleon.Keyword do
   Converts a keyword color to its rgb value.
 
   ## Examples
-    iex> Chameleon.Keyword.to_rgb("Red")
-    %{r: 255, g: 0, b: 0}
+      iex> Chameleon.Keyword.to_rgb("Red")
+      %{r: 255, g: 0, b: 0}
   """
   @spec to_rgb(charlist) :: list(integer)
   def to_rgb(value) do
@@ -22,8 +22,8 @@ defmodule Chameleon.Keyword do
   Converts a keyword color to its cmyk value.
 
   ## Examples
-    iex> Chameleon.Keyword.to_cmyk("Red")
-    %{c: 0, m: 100, y: 100, k: 0}
+      iex> Chameleon.Keyword.to_cmyk("Red")
+      %{c: 0, m: 100, y: 100, k: 0}
   """
   @spec to_cmyk(charlist) :: list(integer)
   def to_cmyk(keyword) do
@@ -37,8 +37,8 @@ defmodule Chameleon.Keyword do
   Converts a keyword color to its hsl value.
 
   ## Examples
-    iex> Chameleon.Keyword.to_hsl("Red")
-    %{h: 0, s: 100, l: 50}
+      iex> Chameleon.Keyword.to_hsl("Red")
+      %{h: 0, s: 100, l: 50}
   """
   @spec to_hsl(charlist) :: list(integer)
   def to_hsl(keyword) do
@@ -52,8 +52,8 @@ defmodule Chameleon.Keyword do
   Converts a keyword color to its pantone value.
 
   ## Examples
-    iex> Chameleon.Keyword.to_pantone("Black")
-    "30"
+      iex> Chameleon.Keyword.to_pantone("Black")
+      "30"
   """
   @spec to_pantone(charlist) :: charlist
   def to_pantone(keyword) do
@@ -67,8 +67,8 @@ defmodule Chameleon.Keyword do
   Converts a keyword color to its hex value.
 
   ## Examples
-    iex> Chameleon.Keyword.to_hex("Black")
-    "000000"
+      iex> Chameleon.Keyword.to_hex("Black")
+      "000000"
   """
   @spec to_hex(charlist) :: charlist
   def to_hex(keyword) do

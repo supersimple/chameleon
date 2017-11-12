@@ -1,5 +1,4 @@
 defmodule Chameleon do
-  alias Chameleon.{Hex, Rgb, Cmyk, Pantone, Keyword, Hsl}
   @moduledoc """
   Chameleon
   --------------------------------------------------------------------------
@@ -23,11 +22,11 @@ defmodule Chameleon do
   This is the only public interface available.
 
   ## Examples
-    iex> Chameleon.convert("000000", :hex, :keyword)
-    {:ok, "black"}
+      iex> Chameleon.convert("000000", :hex, :keyword)
+      {:ok, "black"}
 
-    iex> Chameleon.convert("black", :keyword, :cmyk)
-    {:ok, %{c: 0, m: 0, y: 0, k: 100}}
+      iex> Chameleon.convert("black", :keyword, :cmyk)
+      {:ok, %{c: 0, m: 0, y: 0, k: 100}}
   """
   def convert(value, input_model, output_model) do
     Kernel.apply(input_module(input_model), convert_function(output_model), [value])
