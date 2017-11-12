@@ -17,9 +17,6 @@ defmodule Chameleon do
   In this example, there is no pantone value that matches that hex value, but
   an error could also be caused by a bad input value;
   Example: `Chameleon.convert("Reddish-Blue", :keyword, :hex)`
-
-  or an input color model that does not conform with the value passed in:
-  Example: `Chameleon.convert({42, 42, 42}, :cmyk, :hex)`
   """
 
   @doc """
@@ -30,13 +27,19 @@ defmodule Chameleon do
     {:ok, "black"}
 
     iex> Chameleon.convert("black", :keyword, :cmyk)
-    {:ok, %{c: 0, m: 0, y: 0, k: 255}}
-
-    iex> Chameleon.convert([0, 0, 0], :hex, :pantone)
-    {:error, [0, 0, 0]}
+    {:ok, %{c: 0, m: 0, y: 0, k: 100}}
   """
   def convert(value, input_model, output_model) do
     Kernel.apply(input_module(input_model), convert_function(output_model), [value])
+    |> response(value)
+  end
+
+  defp response(output, input_value) when is_tuple(output) do
+    {:error, input_value}
+  end
+
+  defp response(output, _input_value) do
+    {:ok, output}
   end
 
   defp input_module(input_model) do

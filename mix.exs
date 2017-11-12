@@ -23,7 +23,7 @@ defmodule Chameleon.Mixfile do
     """
     Chameleon is a utility for converting colors from one color model to another.
     Conversions can be made to/from RGB, CMYK, Hex, HSL, Pantone, and even Keywords.
-    eg. "FFFFFF" -> {0, 0, 0, 0} -> {255, 255, 255} -> "white"
+    eg. "FFFFFF" -> %{c: 0, m: 0, y: 0, k: 0} -> %{r: 255, g: 255, b: 255} -> "white"
     """
   end
 

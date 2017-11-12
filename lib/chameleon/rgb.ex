@@ -1,23 +1,43 @@
 defmodule Chameleon.Rgb do
+  alias Chameleon.Hex
 
-  alias Chameleon.{Hex, Cmyk, Pantone, Keyword, Hsl}
+  @doc """
+  Converts an rgb color to its hex value.
 
+  ## Examples
+    iex> Chameleon.Rgb.to_hex([255, 0, 0])
+    "FF0000"
+  """
   @spec to_hex(list(integer)) :: charlist
   def to_hex(value) do
     Enum.map(value, fn(dec) -> Integer.to_string(dec, 16) |> String.pad_leading(2, "0") end) |> Enum.join
   end
 
+  @doc """
+  Converts an rgb color to its cmyk value.
+
+  ## Examples
+    iex> Chameleon.Rgb.to_cmyk([255, 0, 0])
+    %{c: 0, m: 100, y: 100, k: 0}
+  """
   @spec to_cmyk(list(integer)) :: list(integer)
   def to_cmyk(value) do
     adjusted_rgb = Enum.map(value, fn(v) -> v / 255.0 end)
     k = calculate_black_level(adjusted_rgb)
     [c, m, y] = calculate_cmy(adjusted_rgb, k)
-    [Float.round(c * 100),
-     Float.round(m * 100),
-     Float.round(y * 100),
-     Float.round(k * 100)]
+    %{c: round(c * 100),
+      m: round(m * 100),
+      y: round(y * 100),
+      k: round(k * 100)}
   end
 
+  @doc """
+  Converts an rgb color to its hsl value.
+
+  ## Examples
+    iex> Chameleon.Rgb.to_hsl([255, 0, 0])
+    %{h: 0, s: 100, l: 50}
+  """
   @spec to_hsl(list(integer)) :: list(integer)
   def to_hsl(value) do
     adjusted_rgb = Enum.map(value, fn(v) -> v / 255.0 end)
@@ -26,9 +46,19 @@ defmodule Chameleon.Rgb do
     h = calculate_hue(delta, rgb_max, adjusted_rgb)
     l = calculate_lightness(rgb_max, rgb_min)
     s = calculate_saturation(rgb_max, rgb_min)
-    [h, s, l]
+    %{h: round(h), s: round(s), l: round(l)}
   end
 
+  @doc """
+  Converts an rgb color to its keyword value.
+
+  ## Examples
+    iex> Chameleon.Rgb.to_keyword([255, 0, 0])
+    "red"
+
+    iex> Chameleon.Rgb.to_keyword([255, 75, 42])
+    {:error, "No keyword match could be found for that rgb value."}
+  """
   @spec to_keyword(list(integer)) :: charlist
   def to_keyword(value) do
     keyword_to_rgb_map()
@@ -39,11 +69,20 @@ defmodule Chameleon.Rgb do
     end
   end
 
+  @doc """
+  Converts an rgb color to its pantone value.
+
+  ## Examples
+    iex> Chameleon.Rgb.to_pantone([0, 0, 0])
+    "30"
+  """
   @spec to_pantone(list(integer)) :: charlist
   def to_pantone(value) do
     to_hex(value)
     |> Hex.to_pantone
   end
+
+  #### Helper Functions #######################################################################
 
   defp keyword_to_rgb_map do
     Code.eval_file("lib/chameleon/keyword_to_rgb.exs")
