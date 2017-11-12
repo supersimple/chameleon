@@ -16,9 +16,6 @@ In this example, there is no pantone value that matches that hex value, but
 an error could also be caused by a bad input value;
 Example: `Chameleon.convert("Reddish-Blue", :keyword, :hex)`
 
-or an input color model that does not conform with the value passed in:
-Example: `Chameleon.convert({42, 42, 42}, :cmyk, :hex)`
-
 ## Installation
 
 The package can be installed by adding `chameleon` to your list of dependencies in `mix.exs`:
@@ -35,3 +32,4 @@ Contributions are welcomed. Please open a pull request or file an issue with you
 Some ideas would be:
  * add a new color model for conversion
  * add functionality to generate complementary colors
+ * handle errors for invalid input values
