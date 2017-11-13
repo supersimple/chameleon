@@ -1,5 +1,5 @@
 defmodule Chameleon.Hsl do
-  alias Chameleon.Rgb
+  alias Chameleon.{Rgb, Util}
 
   @doc """
   Converts an hsl color to its rgb value.
@@ -94,9 +94,5 @@ defmodule Chameleon.Hsl do
   defp calculate_rgb(c, x, h) when h < 300, do: [x, 0, c]
   defp calculate_rgb(c, x, _h), do: [c, 0, x]
 
-  defp rgb_values(rgb_map) do
-    [Map.get(rgb_map, :r),
-     Map.get(rgb_map, :g),
-     Map.get(rgb_map, :b)]
-  end
+  defdelegate rgb_values(rgb_map), to: Util
 end

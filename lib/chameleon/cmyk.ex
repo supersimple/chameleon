@@ -1,5 +1,5 @@
 defmodule Chameleon.Cmyk do
-  alias Chameleon.{Rgb, Hex}
+  alias Chameleon.{Rgb, Hex, Util}
 
   @doc """
   Converts a cmyk color to its rgb value.
@@ -81,9 +81,5 @@ defmodule Chameleon.Cmyk do
 
   #### Helper Functions #######################################################################
 
-  defp rgb_values(rgb_map) do
-    [Map.get(rgb_map, :r),
-     Map.get(rgb_map, :g),
-     Map.get(rgb_map, :b)]
-  end
+  defdelegate rgb_values(rgb_map), to: Util
 end

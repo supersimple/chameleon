@@ -1,5 +1,5 @@
 defmodule Chameleon.Hex do
-  alias Chameleon.Rgb
+  alias Chameleon.{Rgb, Util}
 
   @doc """
   Converts a hex color to its rgb value.
@@ -100,18 +100,6 @@ defmodule Chameleon.Hex do
     {:error, "A hex value must be provided as 3 or 6 characters."}
   end
 
-  defp keyword_to_hex_map do
-    Code.eval_file("lib/chameleon/keyword_to_hex.exs")
-    |> Tuple.to_list
-    |> Enum.at(0)
-  end
-
-  defp pantone_to_hex_map do
-    Code.eval_file("lib/chameleon/pantone_to_hex.exs")
-    |> Tuple.to_list
-    |> Enum.at(0)
-  end
-
   defp convert_short_hex_to_long_hex(hex) do
     case String.length(hex) do
       3 ->
@@ -124,9 +112,7 @@ defmodule Chameleon.Hex do
     end
   end
 
-  defp rgb_values(rgb_map) do
-    [Map.get(rgb_map, :r),
-     Map.get(rgb_map, :g),
-     Map.get(rgb_map, :b)]
-  end
+  defdelegate pantone_to_hex_map, to: Util
+  defdelegate keyword_to_hex_map, to: Util
+  defdelegate rgb_values(rgb_map), to: Util
 end

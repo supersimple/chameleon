@@ -1,5 +1,5 @@
 defmodule Chameleon.Keyword do
-  alias Chameleon.Rgb
+  alias Chameleon.{Rgb, Util}
 
   @doc """
   Converts a keyword color to its rgb value.
@@ -82,21 +82,7 @@ defmodule Chameleon.Keyword do
 
   #### Helper Functions #######################################################################
 
-  defp keyword_to_rgb_map do
-    Code.eval_file("lib/chameleon/keyword_to_rgb.exs")
-    |> Tuple.to_list
-    |> Enum.at(0)
-  end
-
-  defp keyword_to_hex_map do
-    Code.eval_file("lib/chameleon/keyword_to_hex.exs")
-    |> Tuple.to_list
-    |> Enum.at(0)
-  end
-
-  defp rgb_values(rgb_map) do
-    [Map.get(rgb_map, :r),
-     Map.get(rgb_map, :g),
-     Map.get(rgb_map, :b)]
-  end
+  defdelegate keyword_to_rgb_map, to: Util
+  defdelegate keyword_to_hex_map, to: Util
+  defdelegate rgb_values(rgb_map), to: Util
 end

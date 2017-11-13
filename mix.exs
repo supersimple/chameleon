@@ -4,7 +4,7 @@ defmodule Chameleon.Mixfile do
   def project do
     [
       app: :chameleon,
-      version: "1.0.1",
+      version: "1.0.2",
       elixir: "~> 1.5",
       start_permanent: Mix.env == :prod,
       description: description(),
@@ -25,10 +25,7 @@ defmodule Chameleon.Mixfile do
     Conversions can be made to/from RGB, CMYK, Hex, HSL, Pantone, and even Keywords.
 
     For example:
-    ```
       "FFFFFF" -> %{c: 0, m: 0, y: 0, k: 0}
-      [255, 255, 255] -> "white"
-    ```
     """
   end
 

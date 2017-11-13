@@ -1,5 +1,5 @@
 defmodule Chameleon.Rgb do
-  alias Chameleon.Hex
+  alias Chameleon.{Hex, Util}
 
   @doc """
   Converts an rgb color to its hex value.
@@ -84,11 +84,7 @@ defmodule Chameleon.Rgb do
 
   #### Helper Functions #######################################################################
 
-  defp keyword_to_rgb_map do
-    Code.eval_file("lib/chameleon/keyword_to_rgb.exs")
-    |> Tuple.to_list
-    |> Enum.at(0)
-  end
+  defdelegate keyword_to_rgb_map, to: Util
 
   defp calculate_black_level(rgb) do
     1.0 - Enum.max(rgb)
