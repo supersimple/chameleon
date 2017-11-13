@@ -1,5 +1,7 @@
 # Chameleon
 
+![](https://i.imgur.com/KSOqoPx.png)
+
 Chameleon is a utility that converts colors from one model to another.
 It currently supports: Hex, RGB, CMYK, HSL, Pantone, and Keywords.
 
