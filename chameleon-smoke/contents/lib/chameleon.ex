@@ -28,7 +28,6 @@ defmodule Chameleon do
       iex> Chameleon.convert("black", :keyword, :cmyk)
       {:ok, %{c: 0, m: 0, y: 0, k: 100}}
   """
-  @spec convert(any, atom, atom) :: tuple()
   def convert(value, input_model, output_model) do
     Kernel.apply(input_module(input_model), convert_function(output_model), [value])
     |> response(value)
