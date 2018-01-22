@@ -55,7 +55,7 @@ defmodule Chameleon do
   end
 
   defp convert_function(output_model) do
-    "to_" <> Atom.to_string(output_model)
+    ("to_" <> Atom.to_string(output_model))
     |> String.to_atom()
   end
 end

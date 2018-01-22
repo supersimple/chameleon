@@ -10,12 +10,12 @@ defmodule Chameleon.Cmyk do
   """
   @spec to_rgb(list(integer)) :: list(integer)
   def to_rgb(cmyk) do
-    adjusted_cmyk = Enum.map(cmyk, fn(v) -> v / 100.0 end)
+    adjusted_cmyk = Enum.map(cmyk, fn v -> v / 100.0 end)
     [c, m, y, k] = adjusted_cmyk
 
-    r = round Float.round(255.0 * (1.0 - c) * (1.0 - k))
-    g = round Float.round(255.0 * (1.0 - m) * (1.0 - k))
-    b = round Float.round(255.0 * (1.0 - y) * (1.0 - k))
+    r = round(Float.round(255.0 * (1.0 - c) * (1.0 - k)))
+    g = round(Float.round(255.0 * (1.0 - m) * (1.0 - k)))
+    b = round(Float.round(255.0 * (1.0 - y) * (1.0 - k)))
 
     %{r: r, g: g, b: b}
   end

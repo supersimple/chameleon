@@ -31,11 +31,12 @@ defmodule Chameleon.Hex do
   @spec to_keyword(charlist) :: charlist
   def to_keyword(hex) do
     long_hex = convert_short_hex_to_long_hex(hex)
+
     keyword_to_hex_map()
     |> Enum.find(fn {_k, v} -> v == String.downcase(long_hex) end)
     |> case do
-         {keyword, _hex} -> keyword
-         _ -> {:error, "No keyword match could be found for that hex value."}
+      {keyword, _hex} -> keyword
+      _ -> {:error, "No keyword match could be found for that hex value."}
     end
   end
 
@@ -51,7 +52,7 @@ defmodule Chameleon.Hex do
     hex
     |> to_rgb()
     |> rgb_values()
-    |> Rgb.to_hsl
+    |> Rgb.to_hsl()
   end
 
   @doc """
@@ -64,11 +65,12 @@ defmodule Chameleon.Hex do
   @spec to_pantone(charlist) :: charlist
   def to_pantone(hex) do
     long_hex = convert_short_hex_to_long_hex(hex)
+
     pantone_to_hex_map()
     |> Enum.find(fn {_k, v} -> v == String.upcase(long_hex) end)
     |> case do
-         {pantone, _hex} -> pantone
-         _ -> {:error, "No keyword match could be found for that hex value."}
+      {pantone, _hex} -> pantone
+      _ -> {:error, "No keyword match could be found for that hex value."}
     end
   end
 
@@ -84,15 +86,17 @@ defmodule Chameleon.Hex do
     hex
     |> to_rgb()
     |> rgb_values()
-    |> Rgb.to_cmyk
+    |> Rgb.to_cmyk()
   end
 
   #### Helper Functions #######################################################################
 
   defp do_to_rgb(list) when length(list) == 6 do
-    [r, g, b] = list
-    |> Enum.chunk_every(2)
-    |> Enum.map(fn(grp) -> Enum.join(grp) |> String.to_integer(16) end)
+    [r, g, b] =
+      list
+      |> Enum.chunk_every(2)
+      |> Enum.map(fn grp -> Enum.join(grp) |> String.to_integer(16) end)
+
     %{r: r, g: g, b: b}
   end
 
@@ -105,8 +109,9 @@ defmodule Chameleon.Hex do
       3 ->
         hex
         |> String.split("", trim: true)
-        |> Enum.map(fn(grp) -> String.duplicate(grp, 2) end)
+        |> Enum.map(fn grp -> String.duplicate(grp, 2) end)
         |> Enum.join()
+
       _ ->
         hex
     end

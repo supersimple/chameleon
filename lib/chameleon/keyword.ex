@@ -13,8 +13,8 @@ defmodule Chameleon.Keyword do
     keyword_to_rgb_map()
     |> Enum.find(fn {k, _v} -> k == String.downcase(value) end)
     |> case do
-         {_keyword, [r, g, b]} -> %{r: r, g: g, b: b}
-         _ -> {:error, "No keyword match could be found for that rgb value."}
+      {_keyword, [r, g, b]} -> %{r: r, g: g, b: b}
+      _ -> {:error, "No keyword match could be found for that rgb value."}
     end
   end
 
@@ -75,8 +75,8 @@ defmodule Chameleon.Keyword do
     keyword_to_hex_map()
     |> Enum.find(fn {k, _v} -> k == String.downcase(keyword) end)
     |> case do
-         {_keyword, hex} -> hex
-         _ -> {:error, "No keyword match could be found for that hex value."}
+      {_keyword, hex} -> hex
+      _ -> {:error, "No keyword match could be found for that hex value."}
     end
   end
 

@@ -10,7 +10,8 @@ defmodule Chameleon.Rgb do
   """
   @spec to_hex(list(integer)) :: charlist
   def to_hex(value) do
-    Enum.map(value, fn(dec) -> Integer.to_string(dec, 16) |> String.pad_leading(2, "0") end) |> Enum.join
+    Enum.map(value, fn dec -> Integer.to_string(dec, 16) |> String.pad_leading(2, "0") end)
+    |> Enum.join()
   end
 
   @doc """
@@ -22,13 +23,10 @@ defmodule Chameleon.Rgb do
   """
   @spec to_cmyk(list(integer)) :: list(integer)
   def to_cmyk(value) do
-    adjusted_rgb = Enum.map(value, fn(v) -> v / 255.0 end)
+    adjusted_rgb = Enum.map(value, fn v -> v / 255.0 end)
     k = calculate_black_level(adjusted_rgb)
     [c, m, y] = calculate_cmy(adjusted_rgb, k)
-    %{c: round(c * 100),
-      m: round(m * 100),
-      y: round(y * 100),
-      k: round(k * 100)}
+    %{c: round(c * 100), m: round(m * 100), y: round(y * 100), k: round(k * 100)}
   end
 
   @doc """
@@ -40,7 +38,7 @@ defmodule Chameleon.Rgb do
   """
   @spec to_hsl(list(integer)) :: list(integer)
   def to_hsl(value) do
-    adjusted_rgb = Enum.map(value, fn(v) -> v / 255.0 end)
+    adjusted_rgb = Enum.map(value, fn v -> v / 255.0 end)
     {rgb_min, rgb_max} = Enum.min_max(adjusted_rgb)
     delta = rgb_max - rgb_min
     h = calculate_hue(delta, rgb_max, adjusted_rgb)
@@ -64,8 +62,8 @@ defmodule Chameleon.Rgb do
     keyword_to_rgb_map()
     |> Enum.find(fn {_k, v} -> v == value end)
     |> case do
-         {keyword, _rgb} -> keyword
-         _ -> {:error, "No keyword match could be found for that rgb value."}
+      {keyword, _rgb} -> keyword
+      _ -> {:error, "No keyword match could be found for that rgb value."}
     end
   end
 
@@ -79,7 +77,7 @@ defmodule Chameleon.Rgb do
   @spec to_pantone(list(integer)) :: charlist
   def to_pantone(value) do
     to_hex(value)
-    |> Hex.to_pantone
+    |> Hex.to_pantone()
   end
 
   #### Helper Functions #######################################################################
@@ -106,22 +104,28 @@ defmodule Chameleon.Rgb do
 
   defp calculate_hue(delta, rgb_max, rgb) do
     [r, g, b] = rgb
-    h = cond do
-      rgb_max == r ->
-        offset = if (g < b), do: 6, else: 0
-        60.0 * (((g - b) / delta) + offset)
-      rgb_max == g ->
-        60.0 * (((b - r) / delta) + 2)
-      rgb_max == b ->
-        60.0 * (((r - g) / delta) + 4)
-      true ->
-        0
-    end
+
+    h =
+      cond do
+        rgb_max == r ->
+          offset = if g < b, do: 6, else: 0
+          60.0 * ((g - b) / delta + offset)
+
+        rgb_max == g ->
+          60.0 * ((b - r) / delta + 2)
+
+        rgb_max == b ->
+          60.0 * ((r - g) / delta + 4)
+
+        true ->
+          0
+      end
+
     Float.round(h)
   end
 
   defp calculate_lightness(rgb_max, rgb_min) do
-    ((rgb_max + rgb_min) / 2) * 100
+    ((rgb_max + rgb_min) / 2 * 100)
     |> Float.round()
   end
 
@@ -129,6 +133,6 @@ defmodule Chameleon.Rgb do
 
   defp calculate_saturation(rgb_max, rgb_min) do
     l = (rgb_max + rgb_min) / 2
-    ((rgb_max - rgb_min) / (1 - :erlang.abs(2 * l - 1))) * 100.0
+    (rgb_max - rgb_min) / (1 - :erlang.abs(2 * l - 1)) * 100.0
   end
 end

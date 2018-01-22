@@ -13,7 +13,7 @@ defmodule Chameleon.Hsl do
     [h, s, l] = hsl
     c = (1 - :erlang.abs(2 * (l / 100) - 1)) * (s / 100)
     x = c * (1 - :erlang.abs(remainder(h) - 1))
-    m = (l / 100) - (c / 2)
+    m = l / 100 - c / 2
     [r, g, b] = calculate_rgb(c, x, h)
     %{r: round((r + m) * 255), g: round((g + m) * 255), b: round((b + m) * 255)}
   end

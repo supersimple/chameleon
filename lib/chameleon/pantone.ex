@@ -69,8 +69,8 @@ defmodule Chameleon.Pantone do
     pantone_to_hex_map()
     |> Enum.find(fn {k, _v} -> k == String.downcase(pantone) end)
     |> case do
-         {_pantone, hex} -> hex
-         _ -> {:error, "No keyword match could be found for that hex value."}
+      {_pantone, hex} -> hex
+      _ -> {:error, "No keyword match could be found for that hex value."}
     end
   end
 
