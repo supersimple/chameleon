@@ -2,6 +2,8 @@
 
 ![](https://i.imgur.com/KSOqoPx.png)
 
+[![Build Status](https://semaphoreci.com/api/v1/supersimple/chameleon/branches/master/badge.svg)](https://semaphoreci.com/supersimple/chameleon)
+
 Chameleon is a utility that converts colors from one model to another.
 It currently supports: Hex, RGB, CMYK, HSL, Pantone, and Keywords.
 
