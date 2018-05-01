@@ -4,7 +4,7 @@ defmodule Chameleon.Mixfile do
   def project do
     [
       app: :chameleon,
-      version: "1.0.3",
+      version: "1.1.0",
       elixir: "~> 1.5",
       start_permanent: Mix.env() == :prod,
       description: description(),
@@ -34,7 +34,7 @@ defmodule Chameleon.Mixfile do
       name: :chameleon,
       files: ["lib", "mix.exs", "README*", "LICENSE*"],
       maintainers: ["Todd Resudek"],
-      licenses: ["GPL 3.0"],
+      licenses: ["APACHE 2.0"],
       links: %{"GitHub" => "https://github.com/supersimple/chameleon"}
     ]
   end
