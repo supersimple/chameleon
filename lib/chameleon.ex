@@ -5,28 +5,29 @@ defmodule Chameleon do
   Chameleon is a utility that converts colors from one model to another.
   It currently supports: Hex, RGB, CMYK, HSL, Pantone, and Keywords.
   ## Use
-  Conversion requires a color value, an input color model, and an output
-  color model.
-  Example: `Chameleon.convert("FFFFFF", :hex, :rgb) -> {:ok, %{r: 255, g: 255, b: 255}}`
+  Conversion requires an input color struct, and an output color model.
+  Example: `Chameleon.Converter.convert(%Chameleon.Color.new(%{hex: "FFFFFF"}), :rgb) -> %Chameleon.Rgb{r: 255, g: 255, b: 255}`
 
   If a translation cannot be made, the response will be an error tuple with
   the input value returned.
-  Example: `Chameleon.convert("F69292", :hex, :pantone) -> {:error, "F69292"}`
+  Example: `Chameleon.Converter.convert(%Chameleon.Color.new(%{hex: "F69292"}), :pantone) -> {:error, "F69292"}`
 
   In this example, there is no pantone value that matches that hex value, but
   an error could also be caused by a bad input value;
-  Example: `Chameleon.convert("Reddish-Blue", :keyword, :hex)`
+  Example: `Chameleon.Convert.convert(%Chameleon.Color.new(%{keyword: "Reddish-Blue"}, :hex)`
   """
 
   @doc """
   This is the only public interface available.
 
   ## Examples
-      iex> Chameleon.convert("000000", :hex, :keyword)
-      {:ok, "black"}
+      iex> input = Chameleon.Color.new(%{hex: "000000"})
+      iex> Chameleon.Converter.convert(input, :keyword)
+      %Chameleon.Keyword{keyword: "black"}
 
-      iex> Chameleon.convert("black", :keyword, :cmyk)
-      {:ok, %{c: 0, m: 0, y: 0, k: 100}}
+      iex> input = Chameleon.Color.new(%{keyword: "black"})
+      iex> Chameleon.Converter.convert(input, :cmyk)
+      %Chameleon.Cmyk{c: 0, m: 0, y: 0, k: 100}
   """
   @spec convert(any, atom, atom) :: tuple()
   def convert(value, input_model, output_model) do
