@@ -1,6 +1,58 @@
+defmodule Chameleon.Cmyk.Chameleon.Hex do
+  defstruct [:from]
+
+  defimpl Chameleon.Color do
+    def convert(%{from: cmyk}) do
+      Chameleon.Cmyk.to_hex(cmyk)
+    end
+  end
+end
+
+defmodule Chameleon.Cmyk.Chameleon.Rgb do
+  defstruct [:from]
+
+  defimpl Chameleon.Color do
+    def convert(%{from: cmyk}) do
+      Chameleon.Cmyk.to_rgb(cmyk)
+    end
+  end
+end
+
+defmodule Chameleon.Cmyk.Chameleon.Hsl do
+  defstruct [:from]
+
+  defimpl Chameleon.Color do
+    def convert(%{from: cmyk}) do
+      Chameleon.Cmyk.to_hsl(cmyk)
+    end
+  end
+end
+
+defmodule Chameleon.Cmyk.Chameleon.Keyword do
+  defstruct [:from]
+
+  defimpl Chameleon.Color do
+    def convert(%{from: cmyk}) do
+      Chameleon.Cmyk.to_keyword(cmyk)
+    end
+  end
+end
+
+defmodule Chameleon.Cmyk.Chameleon.Pantone do
+  defstruct [:from]
+
+  defimpl Chameleon.Color do
+    def convert(%{from: cmyk}) do
+      Chameleon.Cmyk.to_pantone(cmyk)
+    end
+  end
+end
+
 defmodule Chameleon.Cmyk do
   @enforce_keys [:c, :m, :y, :k]
   defstruct @enforce_keys
+
+  def new(c, m, y, k), do: %__MODULE__{c: c, m: m, y: y, k: k}
 
   @doc """
   Converts a cmyk color to its rgb value.
@@ -17,7 +69,7 @@ defmodule Chameleon.Cmyk do
     g = round(Float.round(255.0 * (1.0 - m) * (1.0 - k)))
     b = round(Float.round(255.0 * (1.0 - y) * (1.0 - k)))
 
-    Chameleon.Color.new(%{r: r, g: g, b: b})
+    Chameleon.Rgb.new(r, g, b)
   end
 
   @doc """
@@ -31,7 +83,7 @@ defmodule Chameleon.Cmyk do
   def to_hsl(cmyk) do
     cmyk
     |> to_rgb()
-    |> Chameleon.Converter.convert(:hsl)
+    |> Chameleon.convert(Chameleon.Hsl)
   end
 
   @doc """
@@ -45,7 +97,7 @@ defmodule Chameleon.Cmyk do
   def to_hex(cmyk) do
     cmyk
     |> to_rgb()
-    |> Chameleon.Converter.convert(:hex)
+    |> Chameleon.convert(Chameleon.Hex)
   end
 
   @doc """
@@ -59,7 +111,7 @@ defmodule Chameleon.Cmyk do
   def to_pantone(cmyk) do
     cmyk
     |> to_hex()
-    |> Chameleon.Converter.convert(:pantone)
+    |> Chameleon.convert(Chameleon.Pantone)
   end
 
   @doc """
@@ -73,15 +125,6 @@ defmodule Chameleon.Cmyk do
   def to_keyword(cmyk) do
     cmyk
     |> to_rgb()
-    |> Chameleon.Converter.convert(:keyword)
+    |> Chameleon.convert(Chameleon.Keyword)
   end
-end
-
-defimpl Chameleon.Converter, for: Chameleon.Cmyk do
-  def convert(cmyk, :rgb), do: Chameleon.Cmyk.to_rgb(cmyk)
-  def convert(cmyk, :hsl), do: Chameleon.Cmyk.to_hsl(cmyk)
-  def convert(cmyk, :hex), do: Chameleon.Cmyk.to_hex(cmyk)
-  def convert(cmyk, :pantone), do: Chameleon.Cmyk.to_pantone(cmyk)
-  def convert(cmyk, :keyword), do: Chameleon.Cmyk.to_keyword(cmyk)
-  def convert(cmyk, :cmyk), do: cmyk
 end

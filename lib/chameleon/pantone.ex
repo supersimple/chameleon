@@ -1,6 +1,58 @@
+defmodule Chameleon.Pantone.Chameleon.Hex do
+  defstruct [:from]
+
+  defimpl Chameleon.Color do
+    def convert(%{from: pantone}) do
+      Chameleon.Pantone.to_hex(pantone)
+    end
+  end
+end
+
+defmodule Chameleon.Pantone.Chameleon.Cmyk do
+  defstruct [:from]
+
+  defimpl Chameleon.Color do
+    def convert(%{from: pantone}) do
+      Chameleon.Pantone.to_cmyk(pantone)
+    end
+  end
+end
+
+defmodule Chameleon.Pantone.Chameleon.Hsl do
+  defstruct [:from]
+
+  defimpl Chameleon.Color do
+    def convert(%{from: pantone}) do
+      Chameleon.Pantone.to_hsl(pantone)
+    end
+  end
+end
+
+defmodule Chameleon.Pantone.Chameleon.Keyword do
+  defstruct [:from]
+
+  defimpl Chameleon.Color do
+    def convert(%{from: pantone}) do
+      Chameleon.Pantone.to_keyword(pantone)
+    end
+  end
+end
+
+defmodule Chameleon.Pantone.Chameleon.Rgb do
+  defstruct [:from]
+
+  defimpl Chameleon.Color do
+    def convert(%{from: pantone}) do
+      Chameleon.Pantone.to_rgb(pantone)
+    end
+  end
+end
+
 defmodule Chameleon.Pantone do
   @enforce_keys [:pantone]
   defstruct @enforce_keys
+
+  def new(pantone), do: %__MODULE__{pantone: pantone}
 
   @doc """
   Converts a pantone color to its rgb value.
@@ -13,7 +65,7 @@ defmodule Chameleon.Pantone do
   def to_rgb(pantone) do
     pantone
     |> to_hex()
-    |> Chameleon.Converter.convert(:rgb)
+    |> Chameleon.convert(Chameleon.Rgb)
   end
 
   @doc """
@@ -27,7 +79,7 @@ defmodule Chameleon.Pantone do
   def to_cmyk(pantone) do
     pantone
     |> to_hex()
-    |> Chameleon.Converter.convert(:cmyk)
+    |> Chameleon.convert(Chameleon.Cmyk)
   end
 
   @doc """
@@ -41,7 +93,7 @@ defmodule Chameleon.Pantone do
   def to_hsl(pantone) do
     pantone
     |> to_hex()
-    |> Chameleon.Converter.convert(:hsl)
+    |> Chameleon.convert(Chameleon.Hsl)
   end
 
   @doc """
@@ -55,7 +107,7 @@ defmodule Chameleon.Pantone do
   def to_keyword(pantone) do
     pantone
     |> to_hex()
-    |> Chameleon.Converter.convert(:keyword)
+    |> Chameleon.convert(Chameleon.Keyword)
   end
 
   @doc """
@@ -70,25 +122,16 @@ defmodule Chameleon.Pantone do
     pantone_to_hex_map()
     |> Enum.find(fn {k, _v} -> k == String.downcase(pantone.pantone) end)
     |> case do
-      {_pantone, hex} -> Chameleon.Color.new(%{hex: hex})
+      {_pantone, hex} -> Chameleon.Hex.new(hex)
       _ -> {:error, "No keyword match could be found for that hex value."}
     end
   end
 
   #### Helper Functions #######################################################################
 
-  def pantone_to_hex_map do
+  defp pantone_to_hex_map do
     Code.eval_file("lib/chameleon/pantone_to_hex.exs")
     |> Tuple.to_list()
     |> Enum.at(0)
   end
-end
-
-defimpl Chameleon.Converter, for: Chameleon.Pantone do
-  def convert(pantone, :cmyk), do: Chameleon.Pantone.to_cmyk(pantone)
-  def convert(pantone, :hsl), do: Chameleon.Pantone.to_hsl(pantone)
-  def convert(pantone, :hex), do: Chameleon.Pantone.to_hex(pantone)
-  def convert(pantone, :rgb), do: Chameleon.Pantone.to_rgb(pantone)
-  def convert(pantone, :keyword), do: Chameleon.Pantone.to_keyword(pantone)
-  def convert(pantone, :pantone), do: pantone
 end
