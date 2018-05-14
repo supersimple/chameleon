@@ -1,56 +1,58 @@
-defmodule Chameleon.Rgb.Chameleon.Hex do
+defmodule Chameleon.RGB.Chameleon.Hex do
   defstruct [:from]
 
   defimpl Chameleon.Color do
     def convert(%{from: rgb}) do
-      Chameleon.Rgb.to_hex(rgb)
+      Chameleon.RGB.to_hex(rgb)
     end
   end
 end
 
-defmodule Chameleon.Rgb.Chameleon.Cmyk do
+defmodule Chameleon.RGB.Chameleon.CMYK do
   defstruct [:from]
 
   defimpl Chameleon.Color do
     def convert(%{from: rgb}) do
-      Chameleon.Rgb.to_cmyk(rgb)
+      Chameleon.RGB.to_cmyk(rgb)
     end
   end
 end
 
-defmodule Chameleon.Rgb.Chameleon.Hsl do
+defmodule Chameleon.RGB.Chameleon.HSL do
   defstruct [:from]
 
   defimpl Chameleon.Color do
     def convert(%{from: rgb}) do
-      Chameleon.Rgb.to_hsl(rgb)
+      Chameleon.RGB.to_hsl(rgb)
     end
   end
 end
 
-defmodule Chameleon.Rgb.Chameleon.Keyword do
+defmodule Chameleon.RGB.Chameleon.Keyword do
   defstruct [:from]
 
   defimpl Chameleon.Color do
     def convert(%{from: rgb}) do
-      Chameleon.Rgb.to_keyword(rgb)
+      Chameleon.RGB.to_keyword(rgb)
     end
   end
 end
 
-defmodule Chameleon.Rgb.Chameleon.Pantone do
+defmodule Chameleon.RGB.Chameleon.Pantone do
   defstruct [:from]
 
   defimpl Chameleon.Color do
     def convert(%{from: rgb}) do
-      Chameleon.Rgb.to_pantone(rgb)
+      Chameleon.RGB.to_pantone(rgb)
     end
   end
 end
 
-defmodule Chameleon.Rgb do
+defmodule Chameleon.RGB do
   @enforce_keys [:r, :g, :b]
   defstruct @enforce_keys
+
+  @type t() :: %__MODULE__{r: integer(), g: integer(), b: integer()}
 
   def new(r, g, b), do: %__MODULE__{r: r, g: g, b: b}
 
@@ -58,10 +60,10 @@ defmodule Chameleon.Rgb do
   Converts an rgb color to its hex value.
 
   ## Examples
-      iex> Chameleon.Rgb.to_hex(%Chameleon.Rgb{r: 255, g: 0, b: 0})
+      iex> Chameleon.RGB.to_hex(%Chameleon.RGB{r: 255, g: 0, b: 0})
       %Chameleon.Hex{hex: "FF0000"}
   """
-  @spec to_hex(struct()) :: struct()
+  @spec to_hex(Chameleon.RGB.t()) :: Chameleon.Hex.t()
   def to_hex(rgb) do
     hex =
       [rgb.r, rgb.g, rgb.b]
@@ -75,16 +77,16 @@ defmodule Chameleon.Rgb do
   Converts an rgb color to its cmyk value.
 
   ## Examples
-      iex> Chameleon.Rgb.to_cmyk(%Chameleon.Rgb{r: 255, g: 0, b: 0})
-      %Chameleon.Cmyk{c: 0, m: 100, y: 100, k: 0}
+      iex> Chameleon.RGB.to_cmyk(%Chameleon.RGB{r: 255, g: 0, b: 0})
+      %Chameleon.CMYK{c: 0, m: 100, y: 100, k: 0}
   """
-  @spec to_cmyk(struct()) :: struct()
+  @spec to_cmyk(Chameleon.RGB.t()) :: Chameleon.CMYK.t()
   def to_cmyk(rgb) do
     adjusted_rgb = Enum.map([rgb.r, rgb.g, rgb.b], fn v -> v / 255.0 end)
     k = calculate_black_level(adjusted_rgb)
     [c, m, y] = calculate_cmy(adjusted_rgb, k)
 
-    Chameleon.Cmyk.new(
+    Chameleon.CMYK.new(
       round(c * 100),
       round(m * 100),
       round(y * 100),
@@ -96,10 +98,10 @@ defmodule Chameleon.Rgb do
   Converts an rgb color to its hsl value.
 
   ## Examples
-      iex> Chameleon.Rgb.to_hsl(%Chameleon.Rgb{r: 255, g: 0, b: 0})
-      %Chameleon.Hsl{h: 0, s: 100, l: 50}
+      iex> Chameleon.RGB.to_hsl(%Chameleon.RGB{r: 255, g: 0, b: 0})
+      %Chameleon.HSL{h: 0, s: 100, l: 50}
   """
-  @spec to_hsl(struct()) :: struct()
+  @spec to_hsl(Chameleon.RGB.t()) :: Chameleon.HSL.t()
   def to_hsl(rgb) do
     adjusted_rgb = Enum.map([rgb.r, rgb.g, rgb.b], fn v -> v / 255.0 end)
     {rgb_min, rgb_max} = Enum.min_max(adjusted_rgb)
@@ -107,20 +109,20 @@ defmodule Chameleon.Rgb do
     h = calculate_hue(delta, rgb_max, adjusted_rgb)
     l = calculate_lightness(rgb_max, rgb_min)
     s = calculate_saturation(rgb_max, rgb_min)
-    Chameleon.Hsl.new(round(h), round(s), round(l))
+    Chameleon.HSL.new(round(h), round(s), round(l))
   end
 
   @doc """
   Converts an rgb color to its keyword value.
 
   ## Examples
-      iex> Chameleon.Rgb.to_keyword(%Chameleon.Rgb{r: 255, g: 0, b: 0})
+      iex> Chameleon.RGB.to_keyword(%Chameleon.RGB{r: 255, g: 0, b: 0})
       %Chameleon.Keyword{keyword: "red"}
 
-      iex> Chameleon.Rgb.to_keyword(%Chameleon.Rgb{r: 255, g: 75, b: 42})
+      iex> Chameleon.RGB.to_keyword(%Chameleon.RGB{r: 255, g: 75, b: 42})
       {:error, "No keyword match could be found for that rgb value."}
   """
-  @spec to_keyword(struct()) :: struct()
+  @spec to_keyword(Chameleon.RGB.t()) :: Chameleon.Keyword.t()
   def to_keyword(rgb) do
     keyword_to_rgb_map()
     |> Enum.find(fn {_k, v} -> v == [rgb.r, rgb.g, rgb.b] end)
@@ -134,10 +136,10 @@ defmodule Chameleon.Rgb do
   Converts an rgb color to its pantone value.
 
   ## Examples
-      iex> Chameleon.Rgb.to_pantone(%Chameleon.Rgb{r: 0, g: 0, b: 0})
+      iex> Chameleon.RGB.to_pantone(%Chameleon.RGB{r: 0, g: 0, b: 0})
       %Chameleon.Pantone{pantone: "30"}
   """
-  @spec to_pantone(struct()) :: struct()
+  @spec to_pantone(Chameleon.RGB.t()) :: Chameleon.Pantone.t()
   def to_pantone(rgb) do
     rgb
     |> to_hex()

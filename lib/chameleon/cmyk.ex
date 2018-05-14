@@ -1,56 +1,58 @@
-defmodule Chameleon.Cmyk.Chameleon.Hex do
+defmodule Chameleon.CMYK.Chameleon.Hex do
   defstruct [:from]
 
   defimpl Chameleon.Color do
     def convert(%{from: cmyk}) do
-      Chameleon.Cmyk.to_hex(cmyk)
+      Chameleon.CMYK.to_hex(cmyk)
     end
   end
 end
 
-defmodule Chameleon.Cmyk.Chameleon.Rgb do
+defmodule Chameleon.CMYK.Chameleon.RGB do
   defstruct [:from]
 
   defimpl Chameleon.Color do
     def convert(%{from: cmyk}) do
-      Chameleon.Cmyk.to_rgb(cmyk)
+      Chameleon.CMYK.to_rgb(cmyk)
     end
   end
 end
 
-defmodule Chameleon.Cmyk.Chameleon.Hsl do
+defmodule Chameleon.CMYK.Chameleon.HSL do
   defstruct [:from]
 
   defimpl Chameleon.Color do
     def convert(%{from: cmyk}) do
-      Chameleon.Cmyk.to_hsl(cmyk)
+      Chameleon.CMYK.to_hsl(cmyk)
     end
   end
 end
 
-defmodule Chameleon.Cmyk.Chameleon.Keyword do
+defmodule Chameleon.CMYK.Chameleon.Keyword do
   defstruct [:from]
 
   defimpl Chameleon.Color do
     def convert(%{from: cmyk}) do
-      Chameleon.Cmyk.to_keyword(cmyk)
+      Chameleon.CMYK.to_keyword(cmyk)
     end
   end
 end
 
-defmodule Chameleon.Cmyk.Chameleon.Pantone do
+defmodule Chameleon.CMYK.Chameleon.Pantone do
   defstruct [:from]
 
   defimpl Chameleon.Color do
     def convert(%{from: cmyk}) do
-      Chameleon.Cmyk.to_pantone(cmyk)
+      Chameleon.CMYK.to_pantone(cmyk)
     end
   end
 end
 
-defmodule Chameleon.Cmyk do
+defmodule Chameleon.CMYK do
   @enforce_keys [:c, :m, :y, :k]
   defstruct @enforce_keys
+
+  @type t() :: %__MODULE__{c: integer(), m: integer(), y: integer(), k: integer()}
 
   def new(c, m, y, k), do: %__MODULE__{c: c, m: m, y: y, k: k}
 
@@ -58,10 +60,10 @@ defmodule Chameleon.Cmyk do
   Converts a cmyk color to its rgb value.
 
   ## Examples
-      iex> Chameleon.Cmyk.to_rgb(%Chameleon.Cmyk{c: 100, m: 0, y: 100, k: 0})
-      %Chameleon.Rgb{r: 0, g: 255, b: 0}
+      iex> Chameleon.CMYK.to_rgb(%Chameleon.CMYK{c: 100, m: 0, y: 100, k: 0})
+      %Chameleon.RGB{r: 0, g: 255, b: 0}
   """
-  @spec to_rgb(struct()) :: struct()
+  @spec to_rgb(Chameleon.CMYK.t()) :: Chameleon.RGB.t()
   def to_rgb(cmyk) do
     [c, m, y, k] = Enum.map([cmyk.c, cmyk.m, cmyk.y, cmyk.k], fn v -> v / 100.0 end)
 
@@ -69,31 +71,31 @@ defmodule Chameleon.Cmyk do
     g = round(Float.round(255.0 * (1.0 - m) * (1.0 - k)))
     b = round(Float.round(255.0 * (1.0 - y) * (1.0 - k)))
 
-    Chameleon.Rgb.new(r, g, b)
+    Chameleon.RGB.new(r, g, b)
   end
 
   @doc """
   Converts a cmyk color to its hsl value.
 
   ## Examples
-      iex> Chameleon.Cmyk.to_hsl(%Chameleon.Cmyk{c: 100, m: 0, y: 100, k: 0})
-      %Chameleon.Hsl{h: 120, s: 100, l: 50}
+      iex> Chameleon.CMYK.to_hsl(%Chameleon.CMYK{c: 100, m: 0, y: 100, k: 0})
+      %Chameleon.HSL{h: 120, s: 100, l: 50}
   """
-  @spec to_hsl(struct()) :: struct()
+  @spec to_hsl(Chameleon.CMYK.t()) :: Chameleon.HSL.t()
   def to_hsl(cmyk) do
     cmyk
     |> to_rgb()
-    |> Chameleon.convert(Chameleon.Hsl)
+    |> Chameleon.convert(Chameleon.HSL)
   end
 
   @doc """
   Converts a cmyk color to its hex value.
 
   ## Examples
-      iex> Chameleon.Cmyk.to_hex(%Chameleon.Cmyk{c: 100, m: 0, y: 100, k: 0})
+      iex> Chameleon.CMYK.to_hex(%Chameleon.CMYK{c: 100, m: 0, y: 100, k: 0})
       %Chameleon.Hex{hex: "00FF00"}
   """
-  @spec to_hex(struct()) :: struct()
+  @spec to_hex(Chameleon.CMYK.t()) :: Chameleon.Hex.t()
   def to_hex(cmyk) do
     cmyk
     |> to_rgb()
@@ -104,10 +106,10 @@ defmodule Chameleon.Cmyk do
   Converts a cmyk color to its pantone value.
 
   ## Examples
-      iex> Chameleon.Cmyk.to_pantone(%Chameleon.Cmyk{c: 0, m: 0, y: 0, k: 100})
+      iex> Chameleon.CMYK.to_pantone(%Chameleon.CMYK{c: 0, m: 0, y: 0, k: 100})
       %Chameleon.Pantone{pantone: "30"}
   """
-  @spec to_pantone(struct()) :: struct()
+  @spec to_pantone(Chameleon.CMYK.t()) :: Chameleon.Pantone.t()
   def to_pantone(cmyk) do
     cmyk
     |> to_hex()
@@ -118,10 +120,10 @@ defmodule Chameleon.Cmyk do
   Converts a cmyk color to its rgb value.
 
   ## Examples
-      iex> Chameleon.Cmyk.to_keyword(%Chameleon.Cmyk{c: 100, m: 0, y: 100, k: 0})
+      iex> Chameleon.CMYK.to_keyword(%Chameleon.CMYK{c: 100, m: 0, y: 100, k: 0})
       %Chameleon.Keyword{keyword: "lime"}
   """
-  @spec to_keyword(struct()) :: struct()
+  @spec to_keyword(Chameleon.CMYK.t()) :: Chameleon.Keyword.t()
   def to_keyword(cmyk) do
     cmyk
     |> to_rgb()

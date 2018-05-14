@@ -1,4 +1,4 @@
-defmodule Chameleon.Hex.Chameleon.Rgb do
+defmodule Chameleon.Hex.Chameleon.RGB do
   defstruct [:from]
 
   defimpl Chameleon.Color do
@@ -8,7 +8,7 @@ defmodule Chameleon.Hex.Chameleon.Rgb do
   end
 end
 
-defmodule Chameleon.Hex.Chameleon.Cmyk do
+defmodule Chameleon.Hex.Chameleon.CMYK do
   defstruct [:from]
 
   defimpl Chameleon.Color do
@@ -18,7 +18,7 @@ defmodule Chameleon.Hex.Chameleon.Cmyk do
   end
 end
 
-defmodule Chameleon.Hex.Chameleon.Hsl do
+defmodule Chameleon.Hex.Chameleon.HSL do
   defstruct [:from]
 
   defimpl Chameleon.Color do
@@ -52,6 +52,8 @@ defmodule Chameleon.Hex do
   @enforce_keys [:hex]
   defstruct @enforce_keys
 
+  @type t() :: %__MODULE__{hex: String.t()}
+
   def new(hex), do: %__MODULE__{hex: hex}
 
   @doc """
@@ -59,12 +61,12 @@ defmodule Chameleon.Hex do
 
   ## Examples
       iex> Chameleon.Hex.to_rgb(%Chameleon.Hex{hex: "FF0000"})
-      %Chameleon.Rgb{r: 255, g: 0, b: 0}
+      %Chameleon.RGB{r: 255, g: 0, b: 0}
 
       iex> Chameleon.Hex.to_rgb(%Chameleon.Hex{hex: "F00"})
-      %Chameleon.Rgb{r: 255, g: 0, b: 0}
+      %Chameleon.RGB{r: 255, g: 0, b: 0}
   """
-  @spec to_rgb(struct()) :: struct()
+  @spec to_rgb(Chameleon.Hex.t()) :: Chameleon.RGB.t()
   def to_rgb(hex) do
     convert_short_hex_to_long_hex(hex)
     |> String.split("", trim: true)
@@ -81,7 +83,7 @@ defmodule Chameleon.Hex do
       iex> Chameleon.Hex.to_keyword(%Chameleon.Hex{hex: "6789FE"})
       {:error, "No keyword match could be found for that hex value."}
   """
-  @spec to_keyword(struct()) :: struct()
+  @spec to_keyword(Chameleon.Hex.t()) :: Chameleon.Keyword.t()
   def to_keyword(hex) do
     long_hex = convert_short_hex_to_long_hex(hex)
 
@@ -98,13 +100,13 @@ defmodule Chameleon.Hex do
 
   ## Examples
       iex> Chameleon.Hex.to_hsl(%Chameleon.Hex{hex: "FF0000"})
-      %Chameleon.Hsl{h: 0, s: 100, l: 50}
+      %Chameleon.HSL{h: 0, s: 100, l: 50}
   """
-  @spec to_hsl(struct()) :: struct()
+  @spec to_hsl(Chameleon.Hex.t()) :: Chameleon.HSL.t()
   def to_hsl(hex) do
     hex
     |> to_rgb()
-    |> Chameleon.convert(Chameleon.Hsl)
+    |> Chameleon.convert(Chameleon.HSL)
   end
 
   @doc """
@@ -114,7 +116,7 @@ defmodule Chameleon.Hex do
       iex> Chameleon.Hex.to_pantone(%Chameleon.Hex{hex: "D8CBEB"})
       %Chameleon.Pantone{pantone: "263"}
   """
-  @spec to_pantone(struct()) :: struct()
+  @spec to_pantone(Chameleon.Hex.t()) :: Chameleon.Pantone.t()
   def to_pantone(hex) do
     long_hex = convert_short_hex_to_long_hex(hex)
 
@@ -131,13 +133,13 @@ defmodule Chameleon.Hex do
 
   ## Examples
       iex> Chameleon.Hex.to_cmyk(%Chameleon.Hex{hex: "FF0000"})
-      %Chameleon.Cmyk{c: 0, m: 100, y: 100, k: 0}
+      %Chameleon.CMYK{c: 0, m: 100, y: 100, k: 0}
   """
-  @spec to_cmyk(struct()) :: struct()
+  @spec to_cmyk(Chameleon.Hex.t()) :: Chameleon.CMYK.t()
   def to_cmyk(hex) do
     hex
     |> to_rgb()
-    |> Chameleon.convert(Chameleon.Cmyk)
+    |> Chameleon.convert(Chameleon.CMYK)
   end
 
   #### Helper Functions #######################################################################
@@ -148,7 +150,7 @@ defmodule Chameleon.Hex do
       |> Enum.chunk_every(2)
       |> Enum.map(fn grp -> Enum.join(grp) |> String.to_integer(16) end)
 
-    Chameleon.Rgb.new(r, g, b)
+    Chameleon.RGB.new(r, g, b)
   end
 
   defp do_to_rgb(_list) do

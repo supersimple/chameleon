@@ -8,7 +8,7 @@ defmodule Chameleon.Keyword.Chameleon.Hex do
   end
 end
 
-defmodule Chameleon.Keyword.Chameleon.Cmyk do
+defmodule Chameleon.Keyword.Chameleon.CMYK do
   defstruct [:from]
 
   defimpl Chameleon.Color do
@@ -18,7 +18,7 @@ defmodule Chameleon.Keyword.Chameleon.Cmyk do
   end
 end
 
-defmodule Chameleon.Keyword.Chameleon.Hsl do
+defmodule Chameleon.Keyword.Chameleon.HSL do
   defstruct [:from]
 
   defimpl Chameleon.Color do
@@ -28,7 +28,7 @@ defmodule Chameleon.Keyword.Chameleon.Hsl do
   end
 end
 
-defmodule Chameleon.Keyword.Chameleon.Rgb do
+defmodule Chameleon.Keyword.Chameleon.RGB do
   defstruct [:from]
 
   defimpl Chameleon.Color do
@@ -52,6 +52,8 @@ defmodule Chameleon.Keyword do
   @enforce_keys [:keyword]
   defstruct @enforce_keys
 
+  @type t() :: %__MODULE__{keyword: String.t()}
+
   def new(keyword), do: %__MODULE__{keyword: keyword}
 
   @doc """
@@ -59,14 +61,14 @@ defmodule Chameleon.Keyword do
 
   ## Examples
       iex> Chameleon.Keyword.to_rgb(%Chameleon.Keyword{keyword: "Red"})
-      %Chameleon.Rgb{r: 255, g: 0, b: 0}
+      %Chameleon.RGB{r: 255, g: 0, b: 0}
   """
-  @spec to_rgb(struct()) :: struct()
+  @spec to_rgb(Chameleon.Keyword.t()) :: Chameleon.RGB.t()
   def to_rgb(keyword) do
     keyword_to_rgb_map()
     |> Enum.find(fn {k, _v} -> k == String.downcase(keyword.keyword) end)
     |> case do
-      {_keyword, [r, g, b]} -> Chameleon.Rgb.new(r, g, b)
+      {_keyword, [r, g, b]} -> Chameleon.RGB.new(r, g, b)
       _ -> {:error, "No keyword match could be found for that rgb value."}
     end
   end
@@ -76,13 +78,13 @@ defmodule Chameleon.Keyword do
 
   ## Examples
       iex> Chameleon.Keyword.to_cmyk(%Chameleon.Keyword{keyword: "Red"})
-      %Chameleon.Cmyk{c: 0, m: 100, y: 100, k: 0}
+      %Chameleon.CMYK{c: 0, m: 100, y: 100, k: 0}
   """
-  @spec to_cmyk(struct()) :: struct()
+  @spec to_cmyk(Chameleon.Keyword.t()) :: Chameleon.CMYK.t()
   def to_cmyk(keyword) do
     keyword
     |> to_rgb()
-    |> Chameleon.convert(Chameleon.Cmyk)
+    |> Chameleon.convert(Chameleon.CMYK)
   end
 
   @doc """
@@ -90,13 +92,13 @@ defmodule Chameleon.Keyword do
 
   ## Examples
       iex> Chameleon.Keyword.to_hsl(%Chameleon.Keyword{keyword: "Red"})
-      %Chameleon.Hsl{h: 0, s: 100, l: 50}
+      %Chameleon.HSL{h: 0, s: 100, l: 50}
   """
-  @spec to_hsl(struct()) :: struct()
+  @spec to_hsl(Chameleon.Keyword.t()) :: Chameleon.HSL.t()
   def to_hsl(keyword) do
     keyword
     |> to_rgb()
-    |> Chameleon.convert(Chameleon.Hsl)
+    |> Chameleon.convert(Chameleon.HSL)
   end
 
   @doc """
@@ -106,7 +108,7 @@ defmodule Chameleon.Keyword do
       iex> Chameleon.Keyword.to_pantone(%Chameleon.Keyword{keyword: "Black"})
       %Chameleon.Pantone{pantone: "30"}
   """
-  @spec to_pantone(struct()) :: struct()
+  @spec to_pantone(Chameleon.Keyword.t()) :: Chameleon.Pantone.t()
   def to_pantone(keyword) do
     keyword
     |> to_rgb()
@@ -120,7 +122,7 @@ defmodule Chameleon.Keyword do
       iex> Chameleon.Keyword.to_hex(%Chameleon.Keyword{keyword: "Black"})
       %Chameleon.Hex{hex: "000000"}
   """
-  @spec to_hex(struct()) :: struct()
+  @spec to_hex(Chameleon.Keyword.t()) :: Chameleon.Hex.t()
   def to_hex(keyword) do
     keyword_to_hex_map()
     |> Enum.find(fn {k, _v} -> k == String.downcase(keyword.keyword) end)

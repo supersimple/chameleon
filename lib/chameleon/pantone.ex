@@ -8,7 +8,7 @@ defmodule Chameleon.Pantone.Chameleon.Hex do
   end
 end
 
-defmodule Chameleon.Pantone.Chameleon.Cmyk do
+defmodule Chameleon.Pantone.Chameleon.CMYK do
   defstruct [:from]
 
   defimpl Chameleon.Color do
@@ -18,7 +18,7 @@ defmodule Chameleon.Pantone.Chameleon.Cmyk do
   end
 end
 
-defmodule Chameleon.Pantone.Chameleon.Hsl do
+defmodule Chameleon.Pantone.Chameleon.HSL do
   defstruct [:from]
 
   defimpl Chameleon.Color do
@@ -38,7 +38,7 @@ defmodule Chameleon.Pantone.Chameleon.Keyword do
   end
 end
 
-defmodule Chameleon.Pantone.Chameleon.Rgb do
+defmodule Chameleon.Pantone.Chameleon.RGB do
   defstruct [:from]
 
   defimpl Chameleon.Color do
@@ -52,6 +52,8 @@ defmodule Chameleon.Pantone do
   @enforce_keys [:pantone]
   defstruct @enforce_keys
 
+  @type t() :: %__MODULE__{pantone: String.t()}
+
   def new(pantone), do: %__MODULE__{pantone: pantone}
 
   @doc """
@@ -59,13 +61,13 @@ defmodule Chameleon.Pantone do
 
   ## Examples
       iex> Chameleon.Pantone.to_rgb(%Chameleon.Pantone{pantone: "30"})
-      %Chameleon.Rgb{r: 0, g: 0, b: 0}
+      %Chameleon.RGB{r: 0, g: 0, b: 0}
   """
-  @spec to_rgb(struct()) :: struct()
+  @spec to_rgb(Chameleon.Pantone.t()) :: Chameleon.RGB.t()
   def to_rgb(pantone) do
     pantone
     |> to_hex()
-    |> Chameleon.convert(Chameleon.Rgb)
+    |> Chameleon.convert(Chameleon.RGB)
   end
 
   @doc """
@@ -73,13 +75,13 @@ defmodule Chameleon.Pantone do
 
   ## Examples
       iex> Chameleon.Pantone.to_cmyk(%Chameleon.Pantone{pantone: "30"})
-      %Chameleon.Cmyk{c: 0, m: 0, y: 0, k: 100}
+      %Chameleon.CMYK{c: 0, m: 0, y: 0, k: 100}
   """
-  @spec to_cmyk(struct()) :: struct()
+  @spec to_cmyk(Chameleon.Pantone.t()) :: Chameleon.Pantone.t()
   def to_cmyk(pantone) do
     pantone
     |> to_hex()
-    |> Chameleon.convert(Chameleon.Cmyk)
+    |> Chameleon.convert(Chameleon.CMYK)
   end
 
   @doc """
@@ -87,13 +89,13 @@ defmodule Chameleon.Pantone do
 
   ## Examples
       iex> Chameleon.Pantone.to_hsl(%Chameleon.Pantone{pantone: "30"})
-      %Chameleon.Hsl{h: 0, s: 0, l: 0}
+      %Chameleon.HSL{h: 0, s: 0, l: 0}
   """
-  @spec to_hsl(struct()) :: struct()
+  @spec to_hsl(Chameleon.Pantone.t()) :: Chameleon.HSL.t()
   def to_hsl(pantone) do
     pantone
     |> to_hex()
-    |> Chameleon.convert(Chameleon.Hsl)
+    |> Chameleon.convert(Chameleon.HSL)
   end
 
   @doc """
@@ -103,7 +105,7 @@ defmodule Chameleon.Pantone do
       iex> Chameleon.Pantone.to_keyword(%Chameleon.Pantone{pantone: "30"})
       %Chameleon.Keyword{keyword: "black"}
   """
-  @spec to_keyword(struct()) :: struct()
+  @spec to_keyword(Chameleon.Pantone.t()) :: Chameleon.Keyword.t()
   def to_keyword(pantone) do
     pantone
     |> to_hex()
@@ -117,7 +119,7 @@ defmodule Chameleon.Pantone do
       iex> Chameleon.Pantone.to_hex(%Chameleon.Pantone{pantone: "30"})
       %Chameleon.Hex{hex: "000000"}
   """
-  @spec to_hex(struct()) :: struct()
+  @spec to_hex(Chameleon.Pantone.t()) :: Chameleon.Hex.t()
   def to_hex(pantone) do
     pantone_to_hex_map()
     |> Enum.find(fn {k, _v} -> k == String.downcase(pantone.pantone) end)

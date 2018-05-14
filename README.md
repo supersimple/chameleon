@@ -9,7 +9,7 @@ It currently supports: Hex, RGB, CMYK, HSL, Pantone, and Keywords.
 
 ## Use
 Conversion requires an input color struct, and an output color model.
-Example: `Chameleon.convert(Chameleon.Hex.new("FFFFFF"), Chameleon.Rgb) -> %Chameleon.Rgb{r: 255, g: 255, b: 255}`
+Example: `Chameleon.convert(Chameleon.Hex.new("FFFFFF"), Chameleon.RGB) -> %Chameleon.RGB{r: 255, g: 255, b: 255}`
 
 If a translation cannot be made, the response will be an error tuple with
 the input value returned.
