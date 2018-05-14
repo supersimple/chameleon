@@ -46,4 +46,18 @@ defmodule ChameleonTest do
     assert %Chameleon.Pantone{pantone: "30"} ==
              Chameleon.convert(%Chameleon.Hex{hex: "000"}, Chameleon.Pantone)
   end
+
+  test "recognizes strings as inputs" do
+    assert %Chameleon.RGB{r: 255, g: 0, b: 0} == Chameleon.convert("red", Chameleon.RGB)
+
+    assert %Chameleon.Pantone{pantone: "30"} == Chameleon.convert("000000", Chameleon.Pantone)
+
+    assert %Chameleon.Pantone{pantone: "30"} == Chameleon.convert("000", Chameleon.Pantone)
+
+    assert %Chameleon.Pantone{pantone: "30"} == Chameleon.convert("#000000", Chameleon.Pantone)
+
+    assert %Chameleon.Pantone{pantone: "30"} == Chameleon.convert("#000", Chameleon.Pantone)
+
+    assert %Chameleon.Hex{hex: "000000"} == Chameleon.convert("30", Chameleon.Hex)
+  end
 end

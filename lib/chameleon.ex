@@ -32,6 +32,14 @@ defmodule Chameleon do
 
   def convert(%{__struct__: color_model} = c, color_model), do: c
 
+  def convert(input, output) when is_binary(input) do
+    # try to discern the input module based on the string
+    case Chameleon.Util.derive_input_struct(input) do
+      {:ok, input_struct} -> convert(input_struct, output)
+      {:error, msg} -> {:error, msg}
+    end
+  end
+
   def convert(input_color, output) do
     convert_struct = Module.concat(input_color.__struct__, output)
     conversion = %{__struct__: convert_struct, from: input_color}
