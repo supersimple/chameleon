@@ -63,7 +63,7 @@ defmodule Chameleon.CMYK do
       iex> Chameleon.CMYK.to_rgb(%Chameleon.CMYK{c: 100, m: 0, y: 100, k: 0})
       %Chameleon.RGB{r: 0, g: 255, b: 0}
   """
-  @spec to_rgb(Chameleon.CMYK.t()) :: Chameleon.RGB.t()
+  @spec to_rgb(Chameleon.CMYK.t()) :: Chameleon.RGB.t() | {:error, String.t()}
   def to_rgb(cmyk) do
     [c, m, y, k] = Enum.map([cmyk.c, cmyk.m, cmyk.y, cmyk.k], fn v -> v / 100.0 end)
 
@@ -81,7 +81,7 @@ defmodule Chameleon.CMYK do
       iex> Chameleon.CMYK.to_hsl(%Chameleon.CMYK{c: 100, m: 0, y: 100, k: 0})
       %Chameleon.HSL{h: 120, s: 100, l: 50}
   """
-  @spec to_hsl(Chameleon.CMYK.t()) :: Chameleon.HSL.t()
+  @spec to_hsl(Chameleon.CMYK.t()) :: Chameleon.HSL.t() | {:error, String.t()}
   def to_hsl(cmyk) do
     cmyk
     |> to_rgb()
@@ -95,7 +95,7 @@ defmodule Chameleon.CMYK do
       iex> Chameleon.CMYK.to_hex(%Chameleon.CMYK{c: 100, m: 0, y: 100, k: 0})
       %Chameleon.Hex{hex: "00FF00"}
   """
-  @spec to_hex(Chameleon.CMYK.t()) :: Chameleon.Hex.t()
+  @spec to_hex(Chameleon.CMYK.t()) :: Chameleon.Hex.t() | {:error, String.t()}
   def to_hex(cmyk) do
     cmyk
     |> to_rgb()
@@ -109,7 +109,7 @@ defmodule Chameleon.CMYK do
       iex> Chameleon.CMYK.to_pantone(%Chameleon.CMYK{c: 0, m: 0, y: 0, k: 100})
       %Chameleon.Pantone{pantone: "30"}
   """
-  @spec to_pantone(Chameleon.CMYK.t()) :: Chameleon.Pantone.t()
+  @spec to_pantone(Chameleon.CMYK.t()) :: Chameleon.Pantone.t() | {:error, String.t()}
   def to_pantone(cmyk) do
     cmyk
     |> to_hex()
@@ -123,7 +123,7 @@ defmodule Chameleon.CMYK do
       iex> Chameleon.CMYK.to_keyword(%Chameleon.CMYK{c: 100, m: 0, y: 100, k: 0})
       %Chameleon.Keyword{keyword: "lime"}
   """
-  @spec to_keyword(Chameleon.CMYK.t()) :: Chameleon.Keyword.t()
+  @spec to_keyword(Chameleon.CMYK.t()) :: Chameleon.Keyword.t() | {:error, String.t()}
   def to_keyword(cmyk) do
     cmyk
     |> to_rgb()

@@ -63,7 +63,7 @@ defmodule Chameleon.Keyword do
       iex> Chameleon.Keyword.to_rgb(%Chameleon.Keyword{keyword: "Red"})
       %Chameleon.RGB{r: 255, g: 0, b: 0}
   """
-  @spec to_rgb(Chameleon.Keyword.t()) :: Chameleon.RGB.t()
+  @spec to_rgb(Chameleon.Keyword.t()) :: Chameleon.RGB.t() | {:error, String.t()}
   def to_rgb(keyword) do
     keyword_to_rgb_map()
     |> Enum.find(fn {k, _v} -> k == String.downcase(keyword.keyword) end)
@@ -80,7 +80,7 @@ defmodule Chameleon.Keyword do
       iex> Chameleon.Keyword.to_cmyk(%Chameleon.Keyword{keyword: "Red"})
       %Chameleon.CMYK{c: 0, m: 100, y: 100, k: 0}
   """
-  @spec to_cmyk(Chameleon.Keyword.t()) :: Chameleon.CMYK.t()
+  @spec to_cmyk(Chameleon.Keyword.t()) :: Chameleon.CMYK.t() | {:error, String.t()}
   def to_cmyk(keyword) do
     keyword
     |> to_rgb()
@@ -94,7 +94,7 @@ defmodule Chameleon.Keyword do
       iex> Chameleon.Keyword.to_hsl(%Chameleon.Keyword{keyword: "Red"})
       %Chameleon.HSL{h: 0, s: 100, l: 50}
   """
-  @spec to_hsl(Chameleon.Keyword.t()) :: Chameleon.HSL.t()
+  @spec to_hsl(Chameleon.Keyword.t()) :: Chameleon.HSL.t() | {:error, String.t()}
   def to_hsl(keyword) do
     keyword
     |> to_rgb()
@@ -108,7 +108,7 @@ defmodule Chameleon.Keyword do
       iex> Chameleon.Keyword.to_pantone(%Chameleon.Keyword{keyword: "Black"})
       %Chameleon.Pantone{pantone: "30"}
   """
-  @spec to_pantone(Chameleon.Keyword.t()) :: Chameleon.Pantone.t()
+  @spec to_pantone(Chameleon.Keyword.t()) :: Chameleon.Pantone.t() | {:error, String.t()}
   def to_pantone(keyword) do
     keyword
     |> to_rgb()
@@ -122,7 +122,7 @@ defmodule Chameleon.Keyword do
       iex> Chameleon.Keyword.to_hex(%Chameleon.Keyword{keyword: "Black"})
       %Chameleon.Hex{hex: "000000"}
   """
-  @spec to_hex(Chameleon.Keyword.t()) :: Chameleon.Hex.t()
+  @spec to_hex(Chameleon.Keyword.t()) :: Chameleon.Hex.t() | {:error, String.t()}
   def to_hex(keyword) do
     keyword_to_hex_map()
     |> Enum.find(fn {k, _v} -> k == String.downcase(keyword.keyword) end)

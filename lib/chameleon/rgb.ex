@@ -63,7 +63,7 @@ defmodule Chameleon.RGB do
       iex> Chameleon.RGB.to_hex(%Chameleon.RGB{r: 255, g: 0, b: 0})
       %Chameleon.Hex{hex: "FF0000"}
   """
-  @spec to_hex(Chameleon.RGB.t()) :: Chameleon.Hex.t()
+  @spec to_hex(Chameleon.RGB.t()) :: Chameleon.Hex.t() | {:error, String.t()}
   def to_hex(rgb) do
     hex =
       [rgb.r, rgb.g, rgb.b]
@@ -80,7 +80,7 @@ defmodule Chameleon.RGB do
       iex> Chameleon.RGB.to_cmyk(%Chameleon.RGB{r: 255, g: 0, b: 0})
       %Chameleon.CMYK{c: 0, m: 100, y: 100, k: 0}
   """
-  @spec to_cmyk(Chameleon.RGB.t()) :: Chameleon.CMYK.t()
+  @spec to_cmyk(Chameleon.RGB.t()) :: Chameleon.CMYK.t() | {:error, String.t()}
   def to_cmyk(rgb) do
     adjusted_rgb = Enum.map([rgb.r, rgb.g, rgb.b], fn v -> v / 255.0 end)
     k = calculate_black_level(adjusted_rgb)
@@ -101,7 +101,7 @@ defmodule Chameleon.RGB do
       iex> Chameleon.RGB.to_hsl(%Chameleon.RGB{r: 255, g: 0, b: 0})
       %Chameleon.HSL{h: 0, s: 100, l: 50}
   """
-  @spec to_hsl(Chameleon.RGB.t()) :: Chameleon.HSL.t()
+  @spec to_hsl(Chameleon.RGB.t()) :: Chameleon.HSL.t() | {:error, String.t()}
   def to_hsl(rgb) do
     adjusted_rgb = Enum.map([rgb.r, rgb.g, rgb.b], fn v -> v / 255.0 end)
     {rgb_min, rgb_max} = Enum.min_max(adjusted_rgb)
@@ -122,7 +122,7 @@ defmodule Chameleon.RGB do
       iex> Chameleon.RGB.to_keyword(%Chameleon.RGB{r: 255, g: 75, b: 42})
       {:error, "No keyword match could be found for that rgb value."}
   """
-  @spec to_keyword(Chameleon.RGB.t()) :: Chameleon.Keyword.t()
+  @spec to_keyword(Chameleon.RGB.t()) :: Chameleon.Keyword.t() | {:error, String.t()}
   def to_keyword(rgb) do
     keyword_to_rgb_map()
     |> Enum.find(fn {_k, v} -> v == [rgb.r, rgb.g, rgb.b] end)
@@ -139,7 +139,7 @@ defmodule Chameleon.RGB do
       iex> Chameleon.RGB.to_pantone(%Chameleon.RGB{r: 0, g: 0, b: 0})
       %Chameleon.Pantone{pantone: "30"}
   """
-  @spec to_pantone(Chameleon.RGB.t()) :: Chameleon.Pantone.t()
+  @spec to_pantone(Chameleon.RGB.t()) :: Chameleon.Pantone.t() | {:error, String.t()}
   def to_pantone(rgb) do
     rgb
     |> to_hex()

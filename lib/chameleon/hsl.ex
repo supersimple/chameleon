@@ -63,7 +63,7 @@ defmodule Chameleon.HSL do
       iex> Chameleon.HSL.to_rgb(%Chameleon.HSL{h: 0, s: 100, l: 50})
       %Chameleon.RGB{r: 255, g: 0, b: 0}
   """
-  @spec to_rgb(Chameleon.HSL.t()) :: Chameleon.RGB.t()
+  @spec to_rgb(Chameleon.HSL.t()) :: Chameleon.RGB.t() | {:error, String.t()}
   def to_rgb(hsl) do
     c = (1 - :erlang.abs(2 * (hsl.l / 100) - 1)) * (hsl.s / 100)
     x = c * (1 - :erlang.abs(remainder(hsl.h) - 1))
@@ -84,7 +84,7 @@ defmodule Chameleon.HSL do
       iex> Chameleon.HSL.to_cmyk(%Chameleon.HSL{h: 0, s: 100, l: 50})
       %Chameleon.CMYK{c: 0, m: 100, y: 100, k: 0}
   """
-  @spec to_cmyk(Chameleon.HSL.t()) :: Chameleon.CMYK.t()
+  @spec to_cmyk(Chameleon.HSL.t()) :: Chameleon.CMYK.t() | {:error, String.t()}
   def to_cmyk(hsl) do
     hsl
     |> to_rgb()
@@ -98,7 +98,7 @@ defmodule Chameleon.HSL do
       iex> Chameleon.HSL.to_hex(%Chameleon.HSL{h: 0, s: 100, l: 50})
       %Chameleon.Hex{hex: "FF0000"}
   """
-  @spec to_hex(Chameleon.HSL.t()) :: Chameleon.Hex.t()
+  @spec to_hex(Chameleon.HSL.t()) :: Chameleon.Hex.t() | {:error, String.t()}
   def to_hex(hsl) do
     hsl
     |> to_rgb()
@@ -112,7 +112,7 @@ defmodule Chameleon.HSL do
       iex> Chameleon.HSL.to_pantone(%Chameleon.HSL{h: 0, s: 0, l: 0})
       %Chameleon.Pantone{pantone: "30"}
   """
-  @spec to_pantone(Chameleon.HSL.t()) :: Chameleon.Pantone.t()
+  @spec to_pantone(Chameleon.HSL.t()) :: Chameleon.Pantone.t() | {:error, String.t()}
   def to_pantone(hsl) do
     hsl
     |> to_rgb()
@@ -126,7 +126,7 @@ defmodule Chameleon.HSL do
       iex> Chameleon.HSL.to_keyword(%Chameleon.HSL{h: 0, s: 0, l: 0})
       %Chameleon.Keyword{keyword: "black"}
   """
-  @spec to_keyword(Chameleon.HSL.t()) :: Chameleon.Keyword.t()
+  @spec to_keyword(Chameleon.HSL.t()) :: Chameleon.Keyword.t() | {:error, String.t()}
   def to_keyword(hsl) do
     hsl
     |> to_rgb()
