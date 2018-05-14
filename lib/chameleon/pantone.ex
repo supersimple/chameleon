@@ -129,9 +129,5 @@ defmodule Chameleon.Pantone do
 
   #### Helper Functions #######################################################################
 
-  defp pantone_to_hex_map do
-    Code.eval_file("lib/chameleon/pantone_to_hex.exs")
-    |> Tuple.to_list()
-    |> Enum.at(0)
-  end
+  defdelegate pantone_to_hex_map, to: Chameleon.Util
 end

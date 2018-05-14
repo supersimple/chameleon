@@ -49,8 +49,6 @@ defmodule Chameleon.Hex.Chameleon.Pantone do
 end
 
 defmodule Chameleon.Hex do
-  alias Chameleon.Util
-
   @enforce_keys [:hex]
   defstruct @enforce_keys
 
@@ -170,7 +168,6 @@ defmodule Chameleon.Hex do
     end
   end
 
-  defdelegate pantone_to_hex_map, to: Util
-  defdelegate keyword_to_hex_map, to: Util
-  defdelegate rgb_values(rgb_map), to: Util
+  defdelegate pantone_to_hex_map, to: Chameleon.Util
+  defdelegate keyword_to_hex_map, to: Chameleon.Util
 end

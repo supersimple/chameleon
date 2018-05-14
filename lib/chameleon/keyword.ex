@@ -132,15 +132,6 @@ defmodule Chameleon.Keyword do
 
   #### Helper Functions #######################################################################
 
-  defp keyword_to_rgb_map do
-    Code.eval_file("lib/chameleon/keyword_to_rgb.exs")
-    |> Tuple.to_list()
-    |> Enum.at(0)
-  end
-
-  defp keyword_to_hex_map do
-    Code.eval_file("lib/chameleon/keyword_to_hex.exs")
-    |> Tuple.to_list()
-    |> Enum.at(0)
-  end
+  defdelegate keyword_to_rgb_map, to: Chameleon.Util
+  defdelegate keyword_to_hex_map, to: Chameleon.Util
 end

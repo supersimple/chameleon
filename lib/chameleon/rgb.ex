@@ -146,12 +146,6 @@ defmodule Chameleon.Rgb do
 
   #### Helper Functions #######################################################################
 
-  defp keyword_to_rgb_map do
-    Code.eval_file("lib/chameleon/keyword_to_rgb.exs")
-    |> Tuple.to_list()
-    |> Enum.at(0)
-  end
-
   defp calculate_black_level(rgb) do
     1.0 - Enum.max(rgb)
   end
@@ -203,4 +197,6 @@ defmodule Chameleon.Rgb do
     l = (rgb_max + rgb_min) / 2
     (rgb_max - rgb_min) / (1 - :erlang.abs(2 * l - 1)) * 100.0
   end
+
+  defdelegate keyword_to_rgb_map, to: Chameleon.Util
 end

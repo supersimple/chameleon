@@ -16,8 +16,4 @@ defmodule Chameleon.Util do
     |> Tuple.to_list()
     |> Enum.at(0)
   end
-
-  def rgb_values(rgb_map) do
-    [Map.get(rgb_map, :r), Map.get(rgb_map, :g), Map.get(rgb_map, :b)]
-  end
 end
