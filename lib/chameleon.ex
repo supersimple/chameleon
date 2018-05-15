@@ -42,7 +42,28 @@ defmodule Chameleon do
 
   def convert(input_color, output) do
     convert_struct = Module.concat(input_color.__struct__, output)
-    conversion = %{__struct__: convert_struct, from: input_color}
-    Chameleon.Color.convert(conversion)
+
+    cond do
+      Code.ensure_compiled?(convert_struct) ->
+        Chameleon.Color.convert(%{__struct__: convert_struct, from: input_color})
+
+      output_transform_available_via_rgb?(input_color) ->
+        transform_output_via_rgb(input_color, output)
+
+      true ->
+        {:error, "No conversion was available from #{input_color.__struct__} to #{output}"}
+    end
+  end
+
+  defp output_transform_available_via_rgb?(input_color) do
+    input_color.__struct__
+    |> Module.concat(Chameleon.RGB)
+    |> Code.ensure_compiled?()
+  end
+
+  defp transform_output_via_rgb(input_color, output) do
+    output_replacement = Module.concat(input_color.__struct__, Chameleon.RGB)
+    rgb = Chameleon.Color.convert(%{__struct__: output_replacement, from: input_color})
+    Chameleon.Color.convert(%{__struct__: Module.concat(rgb.__struct__, output), from: rgb})
   end
 end
