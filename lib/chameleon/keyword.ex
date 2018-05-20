@@ -1,6 +1,8 @@
 defmodule Chameleon.Keyword.Chameleon.Hex do
   defstruct [:from]
 
+  @moduledoc false
+
   defimpl Chameleon.Color do
     def convert(%{from: keyword}) do
       Chameleon.Keyword.to_hex(keyword)
@@ -10,6 +12,8 @@ end
 
 defmodule Chameleon.Keyword.Chameleon.CMYK do
   defstruct [:from]
+
+  @moduledoc false
 
   defimpl Chameleon.Color do
     def convert(%{from: keyword}) do
@@ -21,6 +25,8 @@ end
 defmodule Chameleon.Keyword.Chameleon.HSL do
   defstruct [:from]
 
+  @moduledoc false
+
   defimpl Chameleon.Color do
     def convert(%{from: keyword}) do
       Chameleon.Keyword.to_hsl(keyword)
@@ -31,6 +37,8 @@ end
 defmodule Chameleon.Keyword.Chameleon.RGB do
   defstruct [:from]
 
+  @moduledoc false
+
   defimpl Chameleon.Color do
     def convert(%{from: keyword}) do
       Chameleon.Keyword.to_rgb(keyword)
@@ -40,6 +48,8 @@ end
 
 defmodule Chameleon.Keyword.Chameleon.Pantone do
   defstruct [:from]
+
+  @moduledoc false
 
   defimpl Chameleon.Color do
     def convert(%{from: keyword}) do

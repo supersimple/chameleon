@@ -1,4 +1,5 @@
 defmodule Chameleon.PantoneToHex do
+  @moduledoc false
   @map %{
     "100" => "F3ED86",
     "101" => "F5EC62",
