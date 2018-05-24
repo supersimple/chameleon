@@ -1,6 +1,8 @@
 defmodule Chameleon.Pantone.Chameleon.Hex do
   defstruct [:from]
 
+  @moduledoc false
+
   defimpl Chameleon.Color do
     def convert(%{from: pantone}) do
       Chameleon.Pantone.to_hex(pantone)
@@ -10,6 +12,8 @@ end
 
 defmodule Chameleon.Pantone.Chameleon.CMYK do
   defstruct [:from]
+
+  @moduledoc false
 
   defimpl Chameleon.Color do
     def convert(%{from: pantone}) do
@@ -21,6 +25,8 @@ end
 defmodule Chameleon.Pantone.Chameleon.HSL do
   defstruct [:from]
 
+  @moduledoc false
+
   defimpl Chameleon.Color do
     def convert(%{from: pantone}) do
       Chameleon.Pantone.to_hsl(pantone)
@@ -31,6 +37,8 @@ end
 defmodule Chameleon.Pantone.Chameleon.Keyword do
   defstruct [:from]
 
+  @moduledoc false
+
   defimpl Chameleon.Color do
     def convert(%{from: pantone}) do
       Chameleon.Pantone.to_keyword(pantone)
@@ -40,6 +48,8 @@ end
 
 defmodule Chameleon.Pantone.Chameleon.RGB do
   defstruct [:from]
+
+  @moduledoc false
 
   defimpl Chameleon.Color do
     def convert(%{from: pantone}) do

@@ -1,4 +1,5 @@
 defmodule Chameleon.KeywordToHex do
+  @moduledoc false
   @map %{
     "pink" => "ffc0cb",
     "lightpink" => "ffb6c1",
