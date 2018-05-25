@@ -38,8 +38,7 @@ defmodule HSVTest do
   end
 
   test "converts from keyword to HSV" do
-    # Fails since "black" isn't RGB 0, 0, 0
-    # assert HSV.new(0, 0, 0) == Chameleon.convert("black", HSV)
+    assert HSV.new(0, 0, 0) == Chameleon.convert("black", HSV)
     assert HSV.new(0, 100, 100) == Chameleon.convert("red", HSV)
     assert HSV.new(120, 100, 100) == Chameleon.convert("lime", HSV)
     assert HSV.new(240, 100, 100) == Chameleon.convert("blue", HSV)
