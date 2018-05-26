@@ -10,30 +10,6 @@ defmodule Chameleon.Keyword.Chameleon.Hex do
   end
 end
 
-defmodule Chameleon.Keyword.Chameleon.CMYK do
-  defstruct [:from]
-
-  @moduledoc false
-
-  defimpl Chameleon.Color do
-    def convert(%{from: keyword}) do
-      Chameleon.Keyword.to_cmyk(keyword)
-    end
-  end
-end
-
-defmodule Chameleon.Keyword.Chameleon.HSL do
-  defstruct [:from]
-
-  @moduledoc false
-
-  defimpl Chameleon.Color do
-    def convert(%{from: keyword}) do
-      Chameleon.Keyword.to_hsl(keyword)
-    end
-  end
-end
-
 defmodule Chameleon.Keyword.Chameleon.RGB do
   defstruct [:from]
 
@@ -42,18 +18,6 @@ defmodule Chameleon.Keyword.Chameleon.RGB do
   defimpl Chameleon.Color do
     def convert(%{from: keyword}) do
       Chameleon.Keyword.to_rgb(keyword)
-    end
-  end
-end
-
-defmodule Chameleon.Keyword.Chameleon.Pantone do
-  defstruct [:from]
-
-  @moduledoc false
-
-  defimpl Chameleon.Color do
-    def convert(%{from: keyword}) do
-      Chameleon.Keyword.to_pantone(keyword)
     end
   end
 end
@@ -81,48 +45,6 @@ defmodule Chameleon.Keyword do
       {_keyword, [r, g, b]} -> Chameleon.RGB.new(r, g, b)
       _ -> {:error, "No keyword match could be found for that rgb value."}
     end
-  end
-
-  @doc """
-  Converts a keyword color to its cmyk value.
-
-  ## Examples
-      iex> Chameleon.Keyword.to_cmyk(%Chameleon.Keyword{keyword: "Red"})
-      %Chameleon.CMYK{c: 0, m: 100, y: 100, k: 0}
-  """
-  @spec to_cmyk(Chameleon.Keyword.t()) :: Chameleon.CMYK.t() | {:error, String.t()}
-  def to_cmyk(keyword) do
-    keyword
-    |> to_rgb()
-    |> Chameleon.convert(Chameleon.CMYK)
-  end
-
-  @doc """
-  Converts a keyword color to its hsl value.
-
-  ## Examples
-      iex> Chameleon.Keyword.to_hsl(%Chameleon.Keyword{keyword: "Red"})
-      %Chameleon.HSL{h: 0, s: 100, l: 50}
-  """
-  @spec to_hsl(Chameleon.Keyword.t()) :: Chameleon.HSL.t() | {:error, String.t()}
-  def to_hsl(keyword) do
-    keyword
-    |> to_rgb()
-    |> Chameleon.convert(Chameleon.HSL)
-  end
-
-  @doc """
-  Converts a keyword color to its pantone value.
-
-  ## Examples
-      iex> Chameleon.Keyword.to_pantone(%Chameleon.Keyword{keyword: "Black"})
-      %Chameleon.Pantone{pantone: "30"}
-  """
-  @spec to_pantone(Chameleon.Keyword.t()) :: Chameleon.Pantone.t() | {:error, String.t()}
-  def to_pantone(keyword) do
-    keyword
-    |> to_rgb()
-    |> Chameleon.convert(Chameleon.Pantone)
   end
 
   @doc """

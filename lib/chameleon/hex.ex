@@ -10,30 +10,6 @@ defmodule Chameleon.Hex.Chameleon.RGB do
   end
 end
 
-defmodule Chameleon.Hex.Chameleon.CMYK do
-  defstruct [:from]
-
-  @moduledoc false
-
-  defimpl Chameleon.Color do
-    def convert(%{from: hex}) do
-      Chameleon.Hex.to_cmyk(hex)
-    end
-  end
-end
-
-defmodule Chameleon.Hex.Chameleon.HSL do
-  defstruct [:from]
-
-  @moduledoc false
-
-  defimpl Chameleon.Color do
-    def convert(%{from: hex}) do
-      Chameleon.Hex.to_hsl(hex)
-    end
-  end
-end
-
 defmodule Chameleon.Hex.Chameleon.Keyword do
   defstruct [:from]
 
@@ -106,20 +82,6 @@ defmodule Chameleon.Hex do
   end
 
   @doc """
-  Converts a hex color to its hsl value.
-
-  ## Examples
-      iex> Chameleon.Hex.to_hsl(%Chameleon.Hex{hex: "FF0000"})
-      %Chameleon.HSL{h: 0, s: 100, l: 50}
-  """
-  @spec to_hsl(Chameleon.Hex.t()) :: Chameleon.HSL.t() | {:error, String.t()}
-  def to_hsl(hex) do
-    hex
-    |> to_rgb()
-    |> Chameleon.convert(Chameleon.HSL)
-  end
-
-  @doc """
   Converts a hex color to its pantone value.
 
   ## Examples
@@ -136,20 +98,6 @@ defmodule Chameleon.Hex do
       {pantone, _hex} -> Chameleon.Pantone.new(pantone)
       _ -> {:error, "No pantone match could be found for that color value."}
     end
-  end
-
-  @doc """
-  Converts a hex color to its cmyk value.
-
-  ## Examples
-      iex> Chameleon.Hex.to_cmyk(%Chameleon.Hex{hex: "FF0000"})
-      %Chameleon.CMYK{c: 0, m: 100, y: 100, k: 0}
-  """
-  @spec to_cmyk(Chameleon.Hex.t()) :: Chameleon.CMYK.t() | {:error, String.t()}
-  def to_cmyk(hex) do
-    hex
-    |> to_rgb()
-    |> Chameleon.convert(Chameleon.CMYK)
   end
 
   #### Helper Functions #######################################################################

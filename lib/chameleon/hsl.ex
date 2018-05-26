@@ -1,27 +1,3 @@
-defmodule Chameleon.HSL.Chameleon.Hex do
-  defstruct [:from]
-
-  @moduledoc false
-
-  defimpl Chameleon.Color do
-    def convert(%{from: hsl}) do
-      Chameleon.HSL.to_hex(hsl)
-    end
-  end
-end
-
-defmodule Chameleon.HSL.Chameleon.CMYK do
-  defstruct [:from]
-
-  @moduledoc false
-
-  defimpl Chameleon.Color do
-    def convert(%{from: hsl}) do
-      Chameleon.HSL.to_cmyk(hsl)
-    end
-  end
-end
-
 defmodule Chameleon.HSL.Chameleon.RGB do
   defstruct [:from]
 
@@ -30,30 +6,6 @@ defmodule Chameleon.HSL.Chameleon.RGB do
   defimpl Chameleon.Color do
     def convert(%{from: hsl}) do
       Chameleon.HSL.to_rgb(hsl)
-    end
-  end
-end
-
-defmodule Chameleon.HSL.Chameleon.Keyword do
-  defstruct [:from]
-
-  @moduledoc false
-
-  defimpl Chameleon.Color do
-    def convert(%{from: hsl}) do
-      Chameleon.HSL.to_keyword(hsl)
-    end
-  end
-end
-
-defmodule Chameleon.HSL.Chameleon.Pantone do
-  defstruct [:from]
-
-  @moduledoc false
-
-  defimpl Chameleon.Color do
-    def convert(%{from: hsl}) do
-      Chameleon.HSL.to_pantone(hsl)
     end
   end
 end
@@ -85,62 +37,6 @@ defmodule Chameleon.HSL do
       round((g + m) * 255),
       round((b + m) * 255)
     )
-  end
-
-  @doc """
-  Converts an hsl color to its cmyk value.
-
-  ## Examples
-      iex> Chameleon.HSL.to_cmyk(%Chameleon.HSL{h: 0, s: 100, l: 50})
-      %Chameleon.CMYK{c: 0, m: 100, y: 100, k: 0}
-  """
-  @spec to_cmyk(Chameleon.HSL.t()) :: Chameleon.CMYK.t() | {:error, String.t()}
-  def to_cmyk(hsl) do
-    hsl
-    |> to_rgb()
-    |> Chameleon.convert(Chameleon.CMYK)
-  end
-
-  @doc """
-  Converts an hsl color to its hex value.
-
-  ## Examples
-      iex> Chameleon.HSL.to_hex(%Chameleon.HSL{h: 0, s: 100, l: 50})
-      %Chameleon.Hex{hex: "FF0000"}
-  """
-  @spec to_hex(Chameleon.HSL.t()) :: Chameleon.Hex.t() | {:error, String.t()}
-  def to_hex(hsl) do
-    hsl
-    |> to_rgb()
-    |> Chameleon.convert(Chameleon.Hex)
-  end
-
-  @doc """
-  Converts an hsl color to its rgb value.
-
-  ## Examples
-      iex> Chameleon.HSL.to_pantone(%Chameleon.HSL{h: 0, s: 0, l: 0})
-      %Chameleon.Pantone{pantone: "30"}
-  """
-  @spec to_pantone(Chameleon.HSL.t()) :: Chameleon.Pantone.t() | {:error, String.t()}
-  def to_pantone(hsl) do
-    hsl
-    |> to_rgb()
-    |> Chameleon.convert(Chameleon.Pantone)
-  end
-
-  @doc """
-  Converts an hsl color to its rgb value.
-
-  ## Examples
-      iex> Chameleon.HSL.to_keyword(%Chameleon.HSL{h: 0, s: 0, l: 0})
-      %Chameleon.Keyword{keyword: "black"}
-  """
-  @spec to_keyword(Chameleon.HSL.t()) :: Chameleon.Keyword.t() | {:error, String.t()}
-  def to_keyword(hsl) do
-    hsl
-    |> to_rgb()
-    |> Chameleon.convert(Chameleon.Keyword)
   end
 
   #### Helper Functions #######################################################################
