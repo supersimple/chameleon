@@ -19,11 +19,11 @@ defmodule Chameleon.Util do
       match = Regex.named_captures(~r/^#?(?<val>[0-9A-Fa-f]{3})$/, string) ->
         {:ok, Chameleon.Hex.new(match["val"])}
 
-      string in Map.keys(pantone_to_hex_map()) ->
-        {:ok, Chameleon.Pantone.new(string)}
-
       string in Map.keys(keyword_to_hex_map()) ->
         {:ok, Chameleon.Keyword.new(string)}
+
+      string in Map.keys(pantone_to_hex_map()) ->
+        {:ok, Chameleon.Pantone.new(string)}
 
       true ->
         {:error, "The input could not be translated"}

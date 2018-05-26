@@ -4,12 +4,13 @@ defmodule Chameleon.Mixfile do
   def project do
     [
       app: :chameleon,
-      version: "2.0.1-pre1",
+      version: "2.0.1-pre2",
       elixir: "~> 1.5",
       start_permanent: Mix.env() == :prod,
       description: description(),
       package: package(),
-      deps: deps()
+      deps: deps(),
+      elixirc_paths: elixirc_paths(Mix.env())
     ]
   end
 
@@ -44,4 +45,7 @@ defmodule Chameleon.Mixfile do
       {:ex_doc, ">= 0.18.1", only: :dev}
     ]
   end
+
+  defp elixirc_paths(:test), do: ["lib", "test/support"]
+  defp elixirc_paths(_), do: ["lib"]
 end

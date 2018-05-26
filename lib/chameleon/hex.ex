@@ -64,7 +64,7 @@ defmodule Chameleon.Hex do
 
   @type t() :: %__MODULE__{hex: String.t()}
 
-  def new(hex), do: %__MODULE__{hex: hex}
+  def new(hex), do: %__MODULE__{hex: String.upcase(hex)}
 
   @doc """
   Converts a hex color to its rgb value.
