@@ -1,5 +1,7 @@
-defmodule Chameleon.Hex.Chameleon.Rgb do
+defmodule Chameleon.Hex.Chameleon.RGB do
   defstruct [:from]
+
+  @moduledoc false
 
   defimpl Chameleon.Color do
     def convert(%{from: hex}) do
@@ -8,28 +10,10 @@ defmodule Chameleon.Hex.Chameleon.Rgb do
   end
 end
 
-defmodule Chameleon.Hex.Chameleon.Cmyk do
-  defstruct [:from]
-
-  defimpl Chameleon.Color do
-    def convert(%{from: hex}) do
-      Chameleon.Hex.to_cmyk(hex)
-    end
-  end
-end
-
-defmodule Chameleon.Hex.Chameleon.Hsl do
-  defstruct [:from]
-
-  defimpl Chameleon.Color do
-    def convert(%{from: hex}) do
-      Chameleon.Hex.to_hsl(hex)
-    end
-  end
-end
-
 defmodule Chameleon.Hex.Chameleon.Keyword do
   defstruct [:from]
+
+  @moduledoc false
 
   defimpl Chameleon.Color do
     def convert(%{from: hex}) do
@@ -41,6 +25,8 @@ end
 defmodule Chameleon.Hex.Chameleon.Pantone do
   defstruct [:from]
 
+  @moduledoc false
+
   defimpl Chameleon.Color do
     def convert(%{from: hex}) do
       Chameleon.Hex.to_pantone(hex)
@@ -49,24 +35,24 @@ defmodule Chameleon.Hex.Chameleon.Pantone do
 end
 
 defmodule Chameleon.Hex do
-  alias Chameleon.Util
-
   @enforce_keys [:hex]
   defstruct @enforce_keys
 
-  def new(hex), do: %__MODULE__{hex: hex}
+  @type t() :: %__MODULE__{hex: String.t()}
+
+  def new(hex), do: %__MODULE__{hex: String.upcase(hex)}
 
   @doc """
   Converts a hex color to its rgb value.
 
   ## Examples
       iex> Chameleon.Hex.to_rgb(%Chameleon.Hex{hex: "FF0000"})
-      %Chameleon.Rgb{r: 255, g: 0, b: 0}
+      %Chameleon.RGB{r: 255, g: 0, b: 0}
 
       iex> Chameleon.Hex.to_rgb(%Chameleon.Hex{hex: "F00"})
-      %Chameleon.Rgb{r: 255, g: 0, b: 0}
+      %Chameleon.RGB{r: 255, g: 0, b: 0}
   """
-  @spec to_rgb(struct()) :: struct()
+  @spec to_rgb(Chameleon.Hex.t()) :: Chameleon.RGB.t() | {:error, String.t()}
   def to_rgb(hex) do
     convert_short_hex_to_long_hex(hex)
     |> String.split("", trim: true)
@@ -83,7 +69,7 @@ defmodule Chameleon.Hex do
       iex> Chameleon.Hex.to_keyword(%Chameleon.Hex{hex: "6789FE"})
       {:error, "No keyword match could be found for that hex value."}
   """
-  @spec to_keyword(struct()) :: struct()
+  @spec to_keyword(Chameleon.Hex.t()) :: Chameleon.Keyword.t() | {:error, String.t()}
   def to_keyword(hex) do
     long_hex = convert_short_hex_to_long_hex(hex)
 
@@ -96,27 +82,13 @@ defmodule Chameleon.Hex do
   end
 
   @doc """
-  Converts a hex color to its hsl value.
-
-  ## Examples
-      iex> Chameleon.Hex.to_hsl(%Chameleon.Hex{hex: "FF0000"})
-      %Chameleon.Hsl{h: 0, s: 100, l: 50}
-  """
-  @spec to_hsl(struct()) :: struct()
-  def to_hsl(hex) do
-    hex
-    |> to_rgb()
-    |> Chameleon.convert(Chameleon.Hsl)
-  end
-
-  @doc """
   Converts a hex color to its pantone value.
 
   ## Examples
       iex> Chameleon.Hex.to_pantone(%Chameleon.Hex{hex: "D8CBEB"})
       %Chameleon.Pantone{pantone: "263"}
   """
-  @spec to_pantone(struct()) :: struct()
+  @spec to_pantone(Chameleon.Hex.t()) :: Chameleon.Pantone.t() | {:error, String.t()}
   def to_pantone(hex) do
     long_hex = convert_short_hex_to_long_hex(hex)
 
@@ -128,20 +100,6 @@ defmodule Chameleon.Hex do
     end
   end
 
-  @doc """
-  Converts a hex color to its cmyk value.
-
-  ## Examples
-      iex> Chameleon.Hex.to_cmyk(%Chameleon.Hex{hex: "FF0000"})
-      %Chameleon.Cmyk{c: 0, m: 100, y: 100, k: 0}
-  """
-  @spec to_cmyk(struct()) :: struct()
-  def to_cmyk(hex) do
-    hex
-    |> to_rgb()
-    |> Chameleon.convert(Chameleon.Cmyk)
-  end
-
   #### Helper Functions #######################################################################
 
   defp do_to_rgb(list) when length(list) == 6 do
@@ -150,7 +108,7 @@ defmodule Chameleon.Hex do
       |> Enum.chunk_every(2)
       |> Enum.map(fn grp -> Enum.join(grp) |> String.to_integer(16) end)
 
-    Chameleon.Rgb.new(r, g, b)
+    Chameleon.RGB.new(r, g, b)
   end
 
   defp do_to_rgb(_list) do
@@ -170,7 +128,6 @@ defmodule Chameleon.Hex do
     end
   end
 
-  defdelegate pantone_to_hex_map, to: Util
-  defdelegate keyword_to_hex_map, to: Util
-  defdelegate rgb_values(rgb_map), to: Util
+  defdelegate pantone_to_hex_map, to: Chameleon.Util
+  defdelegate keyword_to_hex_map, to: Chameleon.Util
 end
