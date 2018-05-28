@@ -29,9 +29,9 @@ defmodule Chameleon.CMYK do
   def to_rgb(cmyk) do
     [c, m, y, k] = Enum.map([cmyk.c, cmyk.m, cmyk.y, cmyk.k], fn v -> v / 100.0 end)
 
-    r = round(Float.round(255.0 * (1.0 - c) * (1.0 - k)))
-    g = round(Float.round(255.0 * (1.0 - m) * (1.0 - k)))
-    b = round(Float.round(255.0 * (1.0 - y) * (1.0 - k)))
+    r = round(255.0 * (1.0 - c) * (1.0 - k))
+    g = round(255.0 * (1.0 - m) * (1.0 - k))
+    b = round(255.0 * (1.0 - y) * (1.0 - k))
 
     Chameleon.RGB.new(r, g, b)
   end

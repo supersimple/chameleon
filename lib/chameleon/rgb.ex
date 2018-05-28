@@ -179,28 +179,24 @@ defmodule Chameleon.RGB do
   defp calculate_hue(delta, rgb_max, rgb) do
     [r, g, b] = rgb
 
-    h =
-      cond do
-        rgb_max == r ->
-          offset = if g < b, do: 6, else: 0
-          60.0 * ((g - b) / delta + offset)
+    cond do
+      rgb_max == r ->
+        offset = if g < b, do: 6, else: 0
+        60.0 * ((g - b) / delta + offset)
 
-        rgb_max == g ->
-          60.0 * ((b - r) / delta + 2)
+      rgb_max == g ->
+        60.0 * ((b - r) / delta + 2)
 
-        rgb_max == b ->
-          60.0 * ((r - g) / delta + 4)
+      rgb_max == b ->
+        60.0 * ((r - g) / delta + 4)
 
-        true ->
-          0
-      end
-
-    Float.round(h)
+      true ->
+        0
+    end
   end
 
   defp calculate_lightness(rgb_max, rgb_min) do
-    ((rgb_max + rgb_min) / 2 * 100)
-    |> Float.round()
+    (rgb_max + rgb_min) / 2 * 100
   end
 
   defp calculate_saturation(rgb_max, rgb_min) when rgb_max - rgb_min == 0, do: 0
