@@ -4,7 +4,7 @@ defmodule Chameleon.MixProject do
   def project do
     [
       app: :chameleon,
-      version: "2.0.1-pre3",
+      version: "2.1.0",
       elixir: "~> 1.5",
       start_permanent: Mix.env() == :prod,
       description: description(),
