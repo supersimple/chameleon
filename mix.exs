@@ -1,4 +1,4 @@
-defmodule Chameleon.Mixfile do
+defmodule Chameleon.MixProject do
   use Mix.Project
 
   def project do
@@ -9,6 +9,7 @@ defmodule Chameleon.Mixfile do
       start_permanent: Mix.env() == :prod,
       description: description(),
       package: package(),
+      docs: [extras: ["README.md"], main: "readme"],
       deps: deps(),
       elixirc_paths: elixirc_paths(Mix.env())
     ]
