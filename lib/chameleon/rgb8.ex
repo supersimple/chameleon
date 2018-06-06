@@ -1,27 +1,70 @@
-defmodule Chameleon.RGB do
-  @behaviour Chameleon.Behaviour
+defmodule Chameleon.RGB8.Chameleon.Hex do
+  defstruct [:from]
 
+  @moduledoc false
+
+  defimpl Chameleon.Color do
+    def convert(%{from: rgb}) do
+      Chameleon.RGB.to_hex(rgb)
+    end
+  end
+end
+
+defmodule Chameleon.RGB8.Chameleon.CMYK do
+  defstruct [:from]
+
+  @moduledoc false
+
+  defimpl Chameleon.Color do
+    def convert(%{from: rgb}) do
+      Chameleon.RGB.to_cmyk(rgb)
+    end
+  end
+end
+
+defmodule Chameleon.RGB8.Chameleon.HSL do
+  defstruct [:from]
+
+  @moduledoc false
+
+  defimpl Chameleon.Color do
+    def convert(%{from: rgb}) do
+      Chameleon.RGB.to_hsl(rgb)
+    end
+  end
+end
+
+defmodule Chameleon.RGB8.Chameleon.Keyword do
+  defstruct [:from]
+
+  @moduledoc false
+
+  defimpl Chameleon.Color do
+    def convert(%{from: rgb}) do
+      Chameleon.RGB.to_keyword(rgb)
+    end
+  end
+end
+
+defmodule Chameleon.RGB8.Chameleon.Pantone do
+  defstruct [:from]
+
+  @moduledoc false
+
+  defimpl Chameleon.Color do
+    def convert(%{from: rgb}) do
+      Chameleon.RGB.to_pantone(rgb)
+    end
+  end
+end
+
+defmodule Chameleon.RGB8 do
   @enforce_keys [:r, :g, :b]
   defstruct @enforce_keys
 
   @type t() :: %__MODULE__{r: integer(), g: integer(), b: integer()}
 
-  defimpl Chameleon.Color do
-    def convert(rgb, Chameleon.Hex), do: Chameleon.RGB.to_hex(rgb)
-    def convert(rgb, Chameleon.CMYK), do: Chameleon.RGB.to_cmyk(rgb)
-    def convert(rgb, Chameleon.HSL), do: Chameleon.RGB.to_hsl(rgb)
-    def convert(rgb, Chameleon.Keyword), do: Chameleon.RGB.to_keyword(rgb)
-    def convert(rgb, Chameleon.Pantone), do: Chameleon.RGB.to_pantone(rgb)
-  end
-
   def new(r, g, b), do: %__MODULE__{r: r, g: g, b: b}
-
-  def can_convert_directly?(Chameleon.Hex), do: true
-  def can_convert_directly?(Chameleon.CMYK), do: true
-  def can_convert_directly?(Chameleon.HSL), do: true
-  def can_convert_directly?(Chameleon.Keyword), do: true
-  def can_convert_directly?(Chameleon.Pantone), do: true
-  def can_convert_directly?(_other), do: false
 
   @doc """
   Converts an rgb color to its hex value.

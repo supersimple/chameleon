@@ -1,46 +1,29 @@
-defmodule Chameleon.Hex.Chameleon.RGB do
-  defstruct [:from]
-
-  @moduledoc false
-
-  defimpl Chameleon.Color do
-    def convert(%{from: hex}) do
-      Chameleon.Hex.to_rgb(hex)
-    end
-  end
-end
-
-defmodule Chameleon.Hex.Chameleon.Keyword do
-  defstruct [:from]
-
-  @moduledoc false
-
-  defimpl Chameleon.Color do
-    def convert(%{from: hex}) do
-      Chameleon.Hex.to_keyword(hex)
-    end
-  end
-end
-
-defmodule Chameleon.Hex.Chameleon.Pantone do
-  defstruct [:from]
-
-  @moduledoc false
-
-  defimpl Chameleon.Color do
-    def convert(%{from: hex}) do
-      Chameleon.Hex.to_pantone(hex)
-    end
-  end
-end
-
 defmodule Chameleon.Hex do
+  @behaviour Chameleon.Behaviour
+
   @enforce_keys [:hex]
   defstruct @enforce_keys
 
   @type t() :: %__MODULE__{hex: String.t()}
 
+  defimpl Chameleon.Color do
+    def convert(hex, Chameleon.RGB), do: Chameleon.Hex.to_rgb(hex)
+    def convert(hex, Chameleon.Keyword), do: Chameleon.Hex.to_keyword(hex)
+    def convert(hex, Chameleon.Pantone), do: Chameleon.Hex.to_pantone(hex)
+
+    def convert(hex, output) do
+      hex
+      |> Chameleon.Hex.to_rgb()
+      |> Chameleon.Color.convert(output)
+    end
+  end
+
   def new(hex), do: %__MODULE__{hex: String.upcase(hex)}
+
+  def can_convert_directly?(Chameleon.RGB), do: true
+  def can_convert_directly?(Chameleon.Keyword), do: true
+  def can_convert_directly?(Chameleon.Pantone), do: true
+  def can_convert_directly?(_other), do: false
 
   @doc """
   Converts a hex color to its rgb value.

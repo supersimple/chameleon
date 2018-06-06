@@ -1,22 +1,25 @@
-defmodule Chameleon.HSL.Chameleon.RGB do
-  defstruct [:from]
-
-  @moduledoc false
-
-  defimpl Chameleon.Color do
-    def convert(%{from: hsl}) do
-      Chameleon.HSL.to_rgb(hsl)
-    end
-  end
-end
-
 defmodule Chameleon.HSL do
+  @behaviour Chameleon.Behaviour
+
   @enforce_keys [:h, :s, :l]
   defstruct @enforce_keys
 
   @type t() :: %__MODULE__{h: integer(), s: integer(), l: integer()}
 
+  defimpl Chameleon.Color do
+    def convert(hsl, Chameleon.RGB), do: Chameleon.HSL.to_rgb(hsl)
+
+    def convert(hsl, output) do
+      hsl
+      |> Chameleon.HSL.to_rgb()
+      |> Chameleon.Color.convert(output)
+    end
+  end
+
   def new(h, s, l), do: %__MODULE__{h: h, s: s, l: l}
+
+  def can_convert_directly?(Chameleon.RGB), do: true
+  def can_convert_directly?(_other), do: false
 
   @doc """
   Converts an hsl color to its rgb value.

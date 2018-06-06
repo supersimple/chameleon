@@ -1,34 +1,27 @@
-defmodule Chameleon.Pantone.Chameleon.Hex do
-  defstruct [:from]
-
-  @moduledoc false
-
-  defimpl Chameleon.Color do
-    def convert(%{from: pantone}) do
-      Chameleon.Pantone.to_hex(pantone)
-    end
-  end
-end
-
-defmodule Chameleon.Pantone.Chameleon.RGB do
-  defstruct [:from]
-
-  @moduledoc false
-
-  defimpl Chameleon.Color do
-    def convert(%{from: pantone}) do
-      Chameleon.Pantone.to_rgb(pantone)
-    end
-  end
-end
-
 defmodule Chameleon.Pantone do
+  @behaviour Chameleon.Behaviour
+
   @enforce_keys [:pantone]
   defstruct @enforce_keys
 
   @type t() :: %__MODULE__{pantone: String.t()}
 
+  defimpl Chameleon.Color do
+    def convert(pantone, Chameleon.RGB), do: Chameleon.Pantone.to_rgb(pantone)
+    def convert(pantone, Chameleon.Hex), do: Chameleon.Pantone.to_hex(pantone)
+
+    def convert(pantone, output) do
+      pantone
+      |> Chameleon.Pantone.to_rgb()
+      |> Chameleon.Color.convert(output)
+    end
+  end
+
   def new(pantone), do: %__MODULE__{pantone: pantone}
+
+  def can_convert_directly?(Chameleon.RGB), do: true
+  def can_convert_directly?(Chameleon.Hex), do: true
+  def can_convert_directly?(_other), do: false
 
   @doc """
   Converts a pantone color to its rgb value.

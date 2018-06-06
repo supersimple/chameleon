@@ -1,34 +1,27 @@
-defmodule Chameleon.Keyword.Chameleon.Hex do
-  defstruct [:from]
-
-  @moduledoc false
-
-  defimpl Chameleon.Color do
-    def convert(%{from: keyword}) do
-      Chameleon.Keyword.to_hex(keyword)
-    end
-  end
-end
-
-defmodule Chameleon.Keyword.Chameleon.RGB do
-  defstruct [:from]
-
-  @moduledoc false
-
-  defimpl Chameleon.Color do
-    def convert(%{from: keyword}) do
-      Chameleon.Keyword.to_rgb(keyword)
-    end
-  end
-end
-
 defmodule Chameleon.Keyword do
+  @behaviour Chameleon.Behaviour
+
   @enforce_keys [:keyword]
   defstruct @enforce_keys
 
   @type t() :: %__MODULE__{keyword: String.t()}
 
+  defimpl Chameleon.Color do
+    def convert(keyword, Chameleon.RGB), do: Chameleon.Keyword.to_rgb(keyword)
+    def convert(keyword, Chameleon.Hex), do: Chameleon.Keyword.to_hex(keyword)
+
+    def convert(keyword, output) do
+      keyword
+      |> Chameleon.Keyword.to_rgb()
+      |> Chameleon.Color.convert(output)
+    end
+  end
+
   def new(keyword), do: %__MODULE__{keyword: keyword}
+
+  def can_convert_directly?(Chameleon.RGB), do: true
+  def can_convert_directly?(Chameleon.Hex), do: true
+  def can_convert_directly?(_other), do: false
 
   @doc """
   Converts a keyword color to its rgb value.

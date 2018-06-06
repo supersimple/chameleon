@@ -93,4 +93,30 @@ defmodule RGBTest do
   test "recognizes strings as inputs" do
     assert RGB.new(255, 0, 0) == Chameleon.convert("red", RGB)
   end
+
+  describe "allows RGB8 and RGB888 aliases" do
+    test "converts from Hex to RGB8" do
+      for %{hex: hex, rgb: [r, g, b]} <- color_table() do
+        assert RGB8.new(r, g, b) == Chameleon.convert(Hex.new(hex), RGB8)
+      end
+    end
+
+    test "converts from RGB8 to Hex" do
+      for %{hex: hex, rgb: [r, g, b]} <- color_table() do
+        assert Hex.new(hex) == Chameleon.convert(RGB8.new(r, g, b), Hex)
+      end
+    end
+
+    test "converts from Hex to RGB888" do
+      for %{hex: hex, rgb: [r, g, b]} <- color_table() do
+        assert RGB888.new(r, g, b) == Chameleon.convert(Hex.new(hex), RGB888)
+      end
+    end
+
+    test "converts from RGB888 to Hex" do
+      for %{hex: hex, rgb: [r, g, b]} <- color_table() do
+        assert Hex.new(hex) == Chameleon.convert(RGB888.new(r, g, b), Hex)
+      end
+    end
+  end
 end

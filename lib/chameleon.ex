@@ -45,7 +45,7 @@ defmodule Chameleon do
 
     cond do
       Code.ensure_compiled?(convert_struct) ->
-        Chameleon.Color.convert(%{__struct__: convert_struct, from: input_color})
+        Chameleon.Color.convert(convert_struct, input_color)
 
       output_transform_available_via_rgb?(input_color) ->
         transform_output_via_rgb(input_color, output)
@@ -63,7 +63,7 @@ defmodule Chameleon do
 
   defp transform_output_via_rgb(input_color, output) do
     output_replacement = Module.concat(input_color.__struct__, Chameleon.RGB)
-    rgb = Chameleon.Color.convert(%{__struct__: output_replacement, from: input_color})
-    Chameleon.Color.convert(%{__struct__: Module.concat(rgb.__struct__, output), from: rgb})
+    rgb = Chameleon.Color.convert(output_replacement, input_color)
+    Chameleon.Color.convert(Module.concat(rgb.__struct__, output), rgb)
   end
 end
