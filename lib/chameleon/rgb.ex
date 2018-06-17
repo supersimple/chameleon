@@ -10,7 +10,7 @@ defmodule Chameleon.RGB do
   Creates a new color struct.
 
   ## Examples
-      iex> rgb = Chameleon.RGB.new(25, 30, 80)
+      iex> _rgb = Chameleon.RGB.new(25, 30, 80)
       %Chameleon.RGB{r: 25, g: 30, b: 80}
   """
   @spec new(pos_integer(), pos_integer(), pos_integer()) :: Chameleon.RGB.t()

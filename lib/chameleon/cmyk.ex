@@ -10,7 +10,7 @@ defmodule Chameleon.CMYK do
   Creates a new color struct.
 
   ## Examples
-      iex> cmyk = Chameleon.CMYK.new(25, 30, 80, 0)
+      iex> _cmyk = Chameleon.CMYK.new(25, 30, 80, 0)
       %Chameleon.CMYK{c: 25, m: 30, y: 80, k: 0}
   """
   @spec new(pos_integer(), pos_integer(), pos_integer(), pos_integer()) :: Chameleon.CMYK.t()

@@ -19,8 +19,8 @@ defmodule Chameleon.HSV do
   Creates a new color struct.
 
   ## Examples
-      iex> hsv = Chameleon.HSV.new(7, 8, 9)
-      %Chameleon.HSV{h:7, s:8, v:9}
+      iex> _hsv = Chameleon.HSV.new(7, 8, 9)
+      %Chameleon.HSV{h: 7, s: 8, v: 9}
   """
   @spec new(pos_integer(), pos_integer(), pos_integer()) :: Chameleon.HSV.t()
   def new(h, s, v), do: %__MODULE__{h: h, s: s, v: v}

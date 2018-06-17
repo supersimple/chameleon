@@ -10,8 +10,8 @@ defmodule Chameleon.Hex do
   Creates a new color struct.
 
   ## Examples
-      iex> hex = Chameleon.Hex.new("FF0000")
-      %Chameleon.Hex{hex: "#FF0000"}
+      iex> _hex = Chameleon.Hex.new("FF0000")
+      %Chameleon.Hex{hex: "FF0000"}
   """
   @spec new(String.t()) :: Chameleon.Hex.t()
   def new(hex), do: %__MODULE__{hex: String.upcase(hex)}
