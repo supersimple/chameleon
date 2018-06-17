@@ -1,60 +1,47 @@
 defmodule Chameleon.Pantone do
-  @behaviour Chameleon.Behaviour
+  alias Chameleon.Pantone
 
   @enforce_keys [:pantone]
   defstruct @enforce_keys
 
   @type t() :: %__MODULE__{pantone: String.t()}
 
-  defimpl Chameleon.Color do
-    def convert(pantone, Chameleon.RGB), do: Chameleon.Pantone.to_rgb(pantone)
-    def convert(pantone, Chameleon.Hex), do: Chameleon.Pantone.to_hex(pantone)
-
-    def convert(pantone, output) do
-      pantone
-      |> Chameleon.Pantone.to_rgb()
-      |> Chameleon.Color.convert(output)
-    end
-  end
-
-  def new(pantone), do: %__MODULE__{pantone: pantone}
-
-  def can_convert_directly?(Chameleon.RGB), do: true
-  def can_convert_directly?(Chameleon.Hex), do: true
-  def can_convert_directly?(_other), do: false
-
   @doc """
-  Converts a pantone color to its rgb value.
+  Creates a new color struct.
 
   ## Examples
-      iex> Chameleon.Pantone.to_rgb(%Chameleon.Pantone{pantone: "30"})
-      %Chameleon.RGB{r: 0, g: 0, b: 0}
+      iex> pantone = Chameleon.Pantone.new("30")
+      %Chameleon.Pantone{pantone: "30"}
   """
+  @spec new(String.t()) :: Chameleon.Pantone.t()
+  def new(pantone), do: %__MODULE__{pantone: pantone}
+
+  defimpl Chameleon.Color.RGB do
+    def from(pantone), do: Pantone.to_rgb(pantone)
+  end
+
+  defimpl Chameleon.Color.Hex do
+    def from(pantone), do: Pantone.to_hex(pantone)
+  end
+
+  #### / Conversion Functions / ########################################
+
+  @doc false
   @spec to_rgb(Chameleon.Pantone.t()) :: Chameleon.RGB.t() | {:error, String.t()}
   def to_rgb(pantone) do
     pantone
     |> to_hex()
-    |> Chameleon.convert(Chameleon.RGB)
+    |> Chameleon.Color.RGB.from()
   end
 
-  @doc """
-  Converts a pantone color to its hex value.
-
-  ## Examples
-      iex> Chameleon.Pantone.to_hex(%Chameleon.Pantone{pantone: "30"})
-      %Chameleon.Hex{hex: "000000"}
-  """
+  @doc false
   @spec to_hex(Chameleon.Pantone.t()) :: Chameleon.Hex.t() | {:error, String.t()}
   def to_hex(pantone) do
-    pantone_to_hex_map()
+    Chameleon.Util.pantone_to_hex_map()
     |> Enum.find(fn {k, _v} -> k == String.downcase(pantone.pantone) end)
     |> case do
       {_pantone, hex} -> Chameleon.Hex.new(hex)
       _ -> {:error, "No keyword match could be found for that hex value."}
     end
   end
-
-  #### Helper Functions #######################################################################
-
-  defdelegate pantone_to_hex_map, to: Chameleon.Util
 end

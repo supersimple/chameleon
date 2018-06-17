@@ -6,15 +6,15 @@ defmodule Chameleon do
   It currently supports: Hex, RGB, CMYK, HSL, Pantone, and Keywords.
   ## Use
   Conversion requires an input color struct, and an output color model.
-  Example: `Chameleon.convert(Chameleon.Hex.new("FFFFFF"), Chameleon.RGB) -> %Chameleon.RGB{r: 255, g: 255, b: 255}`
+  Example: `Chameleon.convert(Chameleon.Hex.new("FFFFFF"), Chameleon.Color.RGB) -> %Chameleon.RGB{r: 255, g: 255, b: 255}`
 
   If a translation cannot be made, the response will be an error tuple with
   the input value returned.
-  Example: `Chameleon.Color.convert(Chameleon.Hex.new("F69292"), Chameleon.Pantone) -> {:error, "No keyword match could be found for that hex value."}`
+  Example: `Chameleon.convert(Chameleon.Hex.new("F69292"), Chameleon.Color.Pantone) -> {:error, "No keyword match could be found for that hex value."}`
 
   In this example, there is no pantone value that matches that hex value, but
   an error could also be caused by a bad input value;
-  Example: `Chameleon.convert(Chameleon.Keyword.new("Reddish-Blue", Chameleon.Hex)`
+  Example: `Chameleon.convert(Chameleon.Keyword.new("Reddish-Blue"), Chameleon.Color.Hex)`
   """
 
   @doc """
@@ -22,11 +22,11 @@ defmodule Chameleon do
 
   ## Examples
       iex> input = Chameleon.Hex.new("000000")
-      iex> Chameleon.convert(input, Chameleon.Keyword)
+      iex> Chameleon.convert(input, Chameleon.Color.Keyword)
       %Chameleon.Keyword{keyword: "black"}
 
       iex> input = Chameleon.Keyword.new("black")
-      iex> Chameleon.convert(input, Chameleon.CMYK)
+      iex> Chameleon.convert(input, Chameleon.Color.CMYK)
       %Chameleon.CMYK{c: 0, m: 0, y: 0, k: 100}
   """
 
@@ -41,29 +41,15 @@ defmodule Chameleon do
   end
 
   def convert(input_color, output) do
-    convert_struct = Module.concat(input_color.__struct__, output)
+    output_module(output).from(input_color)
+  end
 
-    cond do
-      Code.ensure_compiled?(convert_struct) ->
-        Chameleon.Color.convert(convert_struct, input_color)
-
-      output_transform_available_via_rgb?(input_color) ->
-        transform_output_via_rgb(input_color, output)
-
-      true ->
-        {:error, "No conversion was available from #{input_color.__struct__} to #{output}"}
+  defp output_module(output) do
+    # legacy API expects Chameleon.RGB format
+    case Module.split(output) do
+      ["Chameleon", "Color", _color] -> output
+      ["Chameleon", color] -> Module.safe_concat(Chameleon.Color, color)
+      _ -> output
     end
-  end
-
-  defp output_transform_available_via_rgb?(input_color) do
-    input_color.__struct__
-    |> Module.concat(Chameleon.RGB)
-    |> Code.ensure_compiled?()
-  end
-
-  defp transform_output_via_rgb(input_color, output) do
-    output_replacement = Module.concat(input_color.__struct__, Chameleon.RGB)
-    rgb = Chameleon.Color.convert(output_replacement, input_color)
-    Chameleon.Color.convert(Module.concat(rgb.__struct__, output), rgb)
   end
 end

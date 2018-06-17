@@ -1,7 +1,24 @@
-defprotocol Chameleon.Color do
-  @moduledoc """
-  Performs the conversions from one color model to another.
-  """
-  @spec convert(struct(), atom()) :: struct()
-  def convert(from_color_struct, to_color_module)
+defprotocol Chameleon.Color.RGB do
+  def from(color)
+end
+
+for protocol <- [
+      Chameleon.Color.CMYK,
+      Chameleon.Color.Hex,
+      Chameleon.Color.HSL,
+      Chameleon.Color.HSV,
+      Chameleon.Color.Keyword,
+      Chameleon.Color.Pantone
+    ] do
+  defprotocol protocol do
+    @fallback_to_any true
+    def from(color)
+  end
+
+  defimpl protocol, for: Any do
+    def from(color) do
+      rgb = Chameleon.Color.RGB.from(color)
+      @protocol.from(rgb)
+    end
+  end
 end
