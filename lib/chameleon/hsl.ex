@@ -1,30 +1,28 @@
-defmodule Chameleon.HSL.Chameleon.RGB do
-  defstruct [:from]
-
-  @moduledoc false
-
-  defimpl Chameleon.Color do
-    def convert(%{from: hsl}) do
-      Chameleon.HSL.to_rgb(hsl)
-    end
-  end
-end
-
 defmodule Chameleon.HSL do
+  alias Chameleon.HSL
+
   @enforce_keys [:h, :s, :l]
   defstruct @enforce_keys
 
   @type t() :: %__MODULE__{h: integer(), s: integer(), l: integer()}
 
-  def new(h, s, l), do: %__MODULE__{h: h, s: s, l: l}
-
   @doc """
-  Converts an hsl color to its rgb value.
+  Creates a new color struct.
 
   ## Examples
-      iex> Chameleon.HSL.to_rgb(%Chameleon.HSL{h: 0, s: 100, l: 50})
-      %Chameleon.RGB{r: 255, g: 0, b: 0}
+      iex> _hsl = Chameleon.HSL.new(7, 8, 9)
+      %Chameleon.HSL{h: 7, s: 8, l: 9}
   """
+  @spec new(pos_integer(), pos_integer(), pos_integer()) :: Chameleon.HSL.t()
+  def new(h, s, l), do: %__MODULE__{h: h, s: s, l: l}
+
+  defimpl Chameleon.Color.RGB do
+    def from(hsl), do: HSL.to_rgb(hsl)
+  end
+
+  #### / Conversion Functions / ########################################
+
+  @doc false
   @spec to_rgb(Chameleon.HSL.t()) :: Chameleon.RGB.t() | {:error, String.t()}
   def to_rgb(hsl) do
     c = (1 - :erlang.abs(2 * (hsl.l / 100) - 1)) * (hsl.s / 100)
@@ -38,8 +36,6 @@ defmodule Chameleon.HSL do
       round((b + m) * 255)
     )
   end
-
-  #### Helper Functions #######################################################################
 
   defp remainder(h) do
     a = h / 60.0

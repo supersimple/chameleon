@@ -1,57 +1,36 @@
-defmodule Chameleon.Hex.Chameleon.RGB do
-  defstruct [:from]
-
-  @moduledoc false
-
-  defimpl Chameleon.Color do
-    def convert(%{from: hex}) do
-      Chameleon.Hex.to_rgb(hex)
-    end
-  end
-end
-
-defmodule Chameleon.Hex.Chameleon.Keyword do
-  defstruct [:from]
-
-  @moduledoc false
-
-  defimpl Chameleon.Color do
-    def convert(%{from: hex}) do
-      Chameleon.Hex.to_keyword(hex)
-    end
-  end
-end
-
-defmodule Chameleon.Hex.Chameleon.Pantone do
-  defstruct [:from]
-
-  @moduledoc false
-
-  defimpl Chameleon.Color do
-    def convert(%{from: hex}) do
-      Chameleon.Hex.to_pantone(hex)
-    end
-  end
-end
-
 defmodule Chameleon.Hex do
+  alias Chameleon.Hex
+
   @enforce_keys [:hex]
   defstruct @enforce_keys
 
   @type t() :: %__MODULE__{hex: String.t()}
 
-  def new(hex), do: %__MODULE__{hex: String.upcase(hex)}
-
   @doc """
-  Converts a hex color to its rgb value.
+  Creates a new color struct.
 
   ## Examples
-      iex> Chameleon.Hex.to_rgb(%Chameleon.Hex{hex: "FF0000"})
-      %Chameleon.RGB{r: 255, g: 0, b: 0}
-
-      iex> Chameleon.Hex.to_rgb(%Chameleon.Hex{hex: "F00"})
-      %Chameleon.RGB{r: 255, g: 0, b: 0}
+      iex> _hex = Chameleon.Hex.new("FF0000")
+      %Chameleon.Hex{hex: "FF0000"}
   """
+  @spec new(String.t()) :: Chameleon.Hex.t()
+  def new(hex), do: %__MODULE__{hex: String.upcase(hex)}
+
+  defimpl Chameleon.Color.RGB do
+    def from(hex), do: Hex.to_rgb(hex)
+  end
+
+  defimpl Chameleon.Color.Keyword do
+    def from(hex), do: Hex.to_keyword(hex)
+  end
+
+  defimpl Chameleon.Color.Pantone do
+    def from(hex), do: Hex.to_pantone(hex)
+  end
+
+  #### / Conversion Functions / ########################################
+
+  @doc false
   @spec to_rgb(Chameleon.Hex.t()) :: Chameleon.RGB.t() | {:error, String.t()}
   def to_rgb(hex) do
     convert_short_hex_to_long_hex(hex)
@@ -59,21 +38,12 @@ defmodule Chameleon.Hex do
     |> do_to_rgb
   end
 
-  @doc """
-  Converts a hex color to its keyword value.
-
-  ## Examples
-      iex> Chameleon.Hex.to_keyword(%Chameleon.Hex{hex: "FF00FF"})
-      %Chameleon.Keyword{keyword: "fuchsia"}
-
-      iex> Chameleon.Hex.to_keyword(%Chameleon.Hex{hex: "6789FE"})
-      {:error, "No keyword match could be found for that hex value."}
-  """
+  @doc false
   @spec to_keyword(Chameleon.Hex.t()) :: Chameleon.Keyword.t() | {:error, String.t()}
   def to_keyword(hex) do
     long_hex = convert_short_hex_to_long_hex(hex)
 
-    keyword_to_hex_map()
+    Chameleon.Util.keyword_to_hex_map()
     |> Enum.find(fn {_k, v} -> v == String.downcase(long_hex) end)
     |> case do
       {keyword, _hex} -> Chameleon.Keyword.new(keyword)
@@ -81,26 +51,18 @@ defmodule Chameleon.Hex do
     end
   end
 
-  @doc """
-  Converts a hex color to its pantone value.
-
-  ## Examples
-      iex> Chameleon.Hex.to_pantone(%Chameleon.Hex{hex: "D8CBEB"})
-      %Chameleon.Pantone{pantone: "263"}
-  """
+  @doc false
   @spec to_pantone(Chameleon.Hex.t()) :: Chameleon.Pantone.t() | {:error, String.t()}
   def to_pantone(hex) do
     long_hex = convert_short_hex_to_long_hex(hex)
 
-    pantone_to_hex_map()
+    Chameleon.Util.pantone_to_hex_map()
     |> Enum.find(fn {_k, v} -> v == String.upcase(long_hex) end)
     |> case do
       {pantone, _hex} -> Chameleon.Pantone.new(pantone)
       _ -> {:error, "No pantone match could be found for that color value."}
     end
   end
-
-  #### Helper Functions #######################################################################
 
   defp do_to_rgb(list) when length(list) == 6 do
     [r, g, b] =
@@ -127,7 +89,4 @@ defmodule Chameleon.Hex do
         hex.hex
     end
   end
-
-  defdelegate pantone_to_hex_map, to: Chameleon.Util
-  defdelegate keyword_to_hex_map, to: Chameleon.Util
 end

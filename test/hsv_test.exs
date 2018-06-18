@@ -1,6 +1,6 @@
 defmodule HSVTest do
   use ExUnit.Case
-  alias Chameleon.{RGB, HSV}
+  alias Chameleon.{Color, RGB, HSV}
 
   doctest Chameleon.HSV
 
@@ -27,20 +27,20 @@ defmodule HSVTest do
 
   test "converts from HSV to RGB" do
     for {rgb, hsv} <- rgb_to_hsv_pairs() do
-      assert rgb == Chameleon.convert(hsv, RGB)
+      assert rgb == Chameleon.convert(hsv, Color.RGB)
     end
   end
 
   test "converts from RGB to HSV" do
     for {rgb, hsv} <- rgb_to_hsv_pairs() do
-      assert hsv == Chameleon.convert(rgb, HSV)
+      assert hsv == Chameleon.convert(rgb, Color.HSV)
     end
   end
 
   test "converts from keyword to HSV" do
-    assert HSV.new(0, 0, 0) == Chameleon.convert("black", HSV)
-    assert HSV.new(0, 100, 100) == Chameleon.convert("red", HSV)
-    assert HSV.new(120, 100, 100) == Chameleon.convert("lime", HSV)
-    assert HSV.new(240, 100, 100) == Chameleon.convert("blue", HSV)
+    assert HSV.new(0, 0, 0) == Chameleon.convert("black", Color.HSV)
+    assert HSV.new(0, 100, 100) == Chameleon.convert("red", Color.HSV)
+    assert HSV.new(120, 100, 100) == Chameleon.convert("lime", Color.HSV)
+    assert HSV.new(240, 100, 100) == Chameleon.convert("blue", Color.HSV)
   end
 end

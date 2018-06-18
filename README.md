@@ -60,27 +60,15 @@ defmodule MyApp.FancyColor do
 end
 ```
 
-Next, create modules for converting the color between types.  Module names must
-be of the form `FromColor.ToColor`. For example:
+Next, implement the color protocol. Your color can implement as many or as few color space protocols as you need.
+For example:
 
 ```elixir
-defmodule MyApp.FancyColor.Chameleon.RGB do
-  defstruct [:from]
-
-  defimpl Chameleon.Color do
-    def convert(%{from: fancy}) do
-      # Do math here...
-      Chameleon.RGB.new(fancy.c1, fancy.c2, fancy.c3)
-    end
-  end
+defimpl Chameleon.Color.RGB do
+  def from(your_color_struct), do: MyApp.FancyColor.to_rgb(your_color_struct)
 end
 ```
-
-It is recommended to add conversion modules to and from RGB. When Chameleon
-doesn't find a direct conversion from one color to another, it will attempt to
-convert through RGB. By supporting RGB conversions, your color type will be
-convertable between many color types. Of course, color conversion is frequently
-a lossy operation and you may want to implement more conversion modules.
+When Chameleon doesn't find a direct conversion from one color to another, it will attempt to convert through RGB. By supporting RGB conversions, your color type will be convertible between many color types. Of course, color conversion is frequently a lossy operation and you may want to implement more conversion modules.
 
 ## Caveat(s)
 
@@ -96,7 +84,7 @@ The package can be installed by adding `chameleon` to your list of dependencies 
 ```elixir
 def deps do
   [
-    {:chameleon, "~> 2.0.0"}
+    {:chameleon, "~> 2.2.0"}
   ]
 end
 ```

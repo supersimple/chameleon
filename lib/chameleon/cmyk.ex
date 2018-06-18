@@ -1,30 +1,28 @@
-defmodule Chameleon.CMYK.Chameleon.RGB do
-  defstruct [:from]
-
-  @moduledoc false
-
-  defimpl Chameleon.Color do
-    def convert(%{from: cmyk}) do
-      Chameleon.CMYK.to_rgb(cmyk)
-    end
-  end
-end
-
 defmodule Chameleon.CMYK do
+  alias Chameleon.CMYK
+
   @enforce_keys [:c, :m, :y, :k]
   defstruct @enforce_keys
 
   @type t() :: %__MODULE__{c: integer(), m: integer(), y: integer(), k: integer()}
 
-  def new(c, m, y, k), do: %__MODULE__{c: c, m: m, y: y, k: k}
-
   @doc """
-  Converts a cmyk color to its rgb value.
+  Creates a new color struct.
 
   ## Examples
-      iex> Chameleon.CMYK.to_rgb(%Chameleon.CMYK{c: 100, m: 0, y: 100, k: 0})
-      %Chameleon.RGB{r: 0, g: 255, b: 0}
+      iex> _cmyk = Chameleon.CMYK.new(25, 30, 80, 0)
+      %Chameleon.CMYK{c: 25, m: 30, y: 80, k: 0}
   """
+  @spec new(pos_integer(), pos_integer(), pos_integer(), pos_integer()) :: Chameleon.CMYK.t()
+  def new(c, m, y, k), do: %__MODULE__{c: c, m: m, y: y, k: k}
+
+  defimpl Chameleon.Color.RGB do
+    def from(cmyk), do: CMYK.to_rgb(cmyk)
+  end
+
+  #### / Conversion Functions / ########################################
+
+  @doc false
   @spec to_rgb(Chameleon.CMYK.t()) :: Chameleon.RGB.t() | {:error, String.t()}
   def to_rgb(cmyk) do
     [c, m, y, k] = Enum.map([cmyk.c, cmyk.m, cmyk.y, cmyk.k], fn v -> v / 100.0 end)

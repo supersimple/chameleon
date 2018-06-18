@@ -1,4 +1,6 @@
 defmodule Chameleon.Util do
+  @moduledoc false
+
   def keyword_to_rgb_map do
     Chameleon.KeywordToRGB.load()
   end
