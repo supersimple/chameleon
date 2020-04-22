@@ -13,7 +13,7 @@ defmodule Chameleon.RGB do
       iex> _rgb = Chameleon.RGB.new(25, 30, 80)
       %Chameleon.RGB{r: 25, g: 30, b: 80}
   """
-  @spec new(pos_integer(), pos_integer(), pos_integer()) :: Chameleon.RGB.t()
+  @spec new(non_neg_integer(), non_neg_integer(), non_neg_integer()) :: Chameleon.RGB.t()
   def new(r, g, b), do: %__MODULE__{r: r, g: g, b: b}
 
   defimpl Chameleon.Color.RGB do

@@ -13,7 +13,7 @@ defmodule Chameleon.HSL do
       iex> _hsl = Chameleon.HSL.new(7, 8, 9)
       %Chameleon.HSL{h: 7, s: 8, l: 9}
   """
-  @spec new(pos_integer(), pos_integer(), pos_integer()) :: Chameleon.HSL.t()
+  @spec new(non_neg_integer(), non_neg_integer(), non_neg_integer()) :: Chameleon.HSL.t()
   def new(h, s, l), do: %__MODULE__{h: h, s: s, l: l}
 
   defimpl Chameleon.Color.RGB do
