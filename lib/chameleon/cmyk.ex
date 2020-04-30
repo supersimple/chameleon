@@ -13,7 +13,8 @@ defmodule Chameleon.CMYK do
       iex> _cmyk = Chameleon.CMYK.new(25, 30, 80, 0)
       %Chameleon.CMYK{c: 25, m: 30, y: 80, k: 0}
   """
-  @spec new(pos_integer(), pos_integer(), pos_integer(), pos_integer()) :: Chameleon.CMYK.t()
+  @spec new(non_neg_integer(), non_neg_integer(), non_neg_integer(), non_neg_integer()) ::
+          Chameleon.CMYK.t()
   def new(c, m, y, k), do: %__MODULE__{c: c, m: m, y: y, k: k}
 
   defimpl Chameleon.Color.RGB do
