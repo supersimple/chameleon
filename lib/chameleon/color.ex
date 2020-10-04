@@ -8,7 +8,8 @@ for protocol <- [
       Chameleon.Color.HSL,
       Chameleon.Color.HSV,
       Chameleon.Color.Keyword,
-      Chameleon.Color.Pantone
+      Chameleon.Color.Pantone,
+      Chameleon.Color.RGB8
     ] do
   defprotocol protocol do
     @fallback_to_any true
