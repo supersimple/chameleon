@@ -43,7 +43,7 @@ defmodule Chameleon.MixProject do
 
   defp deps do
     [
-      {:ex_doc, ">= 0.18.1", only: :dev}
+      {:ex_doc, ">= 0.22.6", only: :dev}
     ]
   end
 
