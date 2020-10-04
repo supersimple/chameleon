@@ -20,8 +20,8 @@ defmodule Chameleon.RGB do
     def from(rgb), do: rgb
   end
 
-  defimpl Chameleon.Color.RGB8 do
-    def from(rgb), do: RGB.to_rgb8(rgb)
+  defimpl Chameleon.Color.RGB888 do
+    def from(rgb), do: RGB.to_rgb888(rgb)
   end
 
   defimpl Chameleon.Color.CMYK do
@@ -51,9 +51,9 @@ defmodule Chameleon.RGB do
   #### / Conversion Functions / ########################################
 
   @doc false
-  @spec to_rgb8(Chameleon.RGB.t()) :: Chameleon.RGB8.t() | {:error, String.t()}
-  def to_rgb8(rgb) do
-    Chameleon.RGB8.new(rgb.r, rgb.g, rgb.b)
+  @spec to_rgb888(Chameleon.RGB.t()) :: Chameleon.RGB888.t() | {:error, String.t()}
+  def to_rgb888(rgb) do
+    Chameleon.RGB888.new(rgb.r, rgb.g, rgb.b)
   end
 
   @doc false
