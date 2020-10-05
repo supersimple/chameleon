@@ -70,7 +70,7 @@ defmodule RGB888Test do
     end
 
     test "converts from CMYK to Keyword" do
-      for %{keyword: keyword,  rgb: [r, g, b]} <- color_table() do
+      for %{keyword: keyword, rgb: [r, g, b]} <- color_table() do
         assert Keyword.new(keyword) == Chameleon.convert(RGB888.new(r, g, b), Color.Keyword)
       end
     end
@@ -78,13 +78,13 @@ defmodule RGB888Test do
 
   describe "Pantone and CMYK conversions" do
     test "converts from Pantone to CMYK" do
-      for %{pantone: pantone,  rgb: [r, g, b]} <- color_table(), not is_nil(pantone) do
+      for %{pantone: pantone, rgb: [r, g, b]} <- color_table(), not is_nil(pantone) do
         assert RGB888.new(r, g, b) == Chameleon.convert(Pantone.new(pantone), Color.RGB888)
       end
     end
 
     test "converts from CMYK to Pantone" do
-      for %{pantone: pantone,  rgb: [r, g, b]} <- color_table(), not is_nil(pantone) do
+      for %{pantone: pantone, rgb: [r, g, b]} <- color_table(), not is_nil(pantone) do
         assert Pantone.new(pantone) == Chameleon.convert(RGB888.new(r, g, b), Color.Pantone)
       end
     end
