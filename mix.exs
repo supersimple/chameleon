@@ -1,15 +1,18 @@
 defmodule Chameleon.MixProject do
   use Mix.Project
 
+  @source_url "https://github.com/supersimple/chameleon"
+  @version "2.3.0"
+
   def project do
     [
       app: :chameleon,
-      version: "2.3.0",
+      version: @version,
       elixir: "~> 1.5",
       start_permanent: Mix.env() == :prod,
       description: description(),
       package: package(),
-      docs: [extras: ["README.md"], main: "readme"],
+      docs: docs(),
       deps: deps(),
       elixirc_paths: elixirc_paths(Mix.env())
     ]
@@ -36,14 +39,28 @@ defmodule Chameleon.MixProject do
       name: :chameleon,
       files: ["lib", "mix.exs", "README*", "LICENSE*"],
       maintainers: ["Todd Resudek"],
-      licenses: ["APACHE 2.0"],
-      links: %{"GitHub" => "https://github.com/supersimple/chameleon"}
+      licenses: ["Apache-2.0"],
+      links: %{"GitHub" => @source_url}
     ]
   end
 
   defp deps do
     [
-      {:ex_doc, ">= 0.22.6", only: :dev}
+      {:ex_doc, ">= 0.0.0", only: :dev, runtime: false}
+    ]
+  end
+
+  defp docs do
+    [
+      extras: [
+        "LICENSE.md": [title: "License"],
+        "README.md": [title: "Overview"]
+      ],
+      main: "readme",
+      assets: "assets",
+      source_url: @source_url,
+      source_ref: "v#{@version}",
+      formatters: ["html"]
     ]
   end
 
