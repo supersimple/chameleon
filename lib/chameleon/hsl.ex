@@ -39,9 +39,7 @@ defmodule Chameleon.HSL do
 
   defp remainder(h) do
     a = h / 60.0
-    dec = a - Float.floor(a)
-    mod = rem(round(a), 2)
-    mod + dec
+    :math.fmod(a, 2)
   end
 
   defp calculate_rgb(c, x, h) when h < 60, do: [c, x, 0]
