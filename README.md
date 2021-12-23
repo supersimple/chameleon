@@ -20,7 +20,7 @@ Chameleon represents colors using Elixir structs. Create a color using one
 of the provided structs:
 
 ```elixir
-iex> mycolor = Chameleon.RGB.new(255, 0, 0)
+iex> Chameleon.RGB.new(255, 0, 0)
 %Chameleon.RGB{b: 0, g: 0, r: 255}
 ```
 
@@ -28,13 +28,10 @@ Once you have a color, Chameleon can convert that color to another colorspace or
 format:
 
 ```elixir
-iex> mycolor = Chameleon.RGB.new(255, 0, 0)
-%Chameleon.RGB{b: 0, g: 0, r: 255}
-
-iex> Chameleon.convert(mycolor, Chameleon.HSV)
+iex> Chameleon.RGB.new(255, 0, 0) |> Chameleon.convert(Chameleon.HSV)
 %Chameleon.HSV{h: 0, s: 100, v: 100}
 
-iex> Chameleon.convert(mycolor, Chameleon.Hex)
+iex> Chameleon.RGB.new(255, 0, 0) |> Chameleon.convert(mycolor, Chameleon.Hex)
 %Chameleon.Hex{hex: "FF0000"}
 ```
 
