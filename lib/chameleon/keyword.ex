@@ -10,8 +10,10 @@ defmodule Chameleon.Keyword do
   Creates a new color struct.
 
   ## Examples
+
       iex> _keyword = Chameleon.Keyword.new("lime")
       %Chameleon.Keyword{keyword: "lime"}
+
   """
   @spec new(String.t()) :: Chameleon.Keyword.t()
   def new(keyword), do: %__MODULE__{keyword: keyword}

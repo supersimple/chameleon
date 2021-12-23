@@ -1,8 +1,15 @@
 # Chameleon
 
-![Chameleon](https://i.imgur.com/KSOqoPx.png)
+![Chameleon](./assets/logo.png)
 
 [![Build Status](https://semaphoreci.com/api/v1/supersimple/chameleon/branches/master/badge.svg)](https://semaphoreci.com/supersimple/chameleon)
+[![Module Version](https://img.shields.io/hexpm/v/chameleon.svg)](https://hex.pm/packages/chameleon)
+[![Hex Docs](https://img.shields.io/badge/hex-docs-lightgreen.svg)](https://hexdocs.pm/chameleon/)
+[![Total Download](https://img.shields.io/hexpm/dt/chameleon.svg)](https://hex.pm/packages/chameleon)
+[![License](https://img.shields.io/hexpm/l/chameleon.svg)](https://github.com/supersimple/chameleon/blob/master/LICENSE.md)
+[![Last Updated](https://img.shields.io/github/last-commit/supersimple/chameleon.svg)](https://github.com/supersimple/chameleon/commits/master)
+
+<!-- MDOC !-->
 
 Chameleon is a utility that converts colors from one model to another.
 It currently supports: Hex, RGB, CMYK, HSL, HSV, Pantone, and Keywords.
@@ -77,6 +84,8 @@ pantone value can be translated to a hex value since hex values will look differ
 on the device displaying them. However, if you have a pantone value and want to find a
 device-displayable analog, this library will work.
 
+<!-- MDOC !-->
+
 ## Installation
 
 The package can be installed by adding `chameleon` to your list of dependencies in `mix.exs`:
@@ -97,3 +106,19 @@ Some ideas would be:
 * Add a new color model for conversion
 * Add functionality to generate complementary colors
 * Handle errors for invalid input values
+
+## Copyright and License
+
+Copyright (c) 2017 Todd Resudek
+
+Licensed under the Apache License, Version 2.0 (the "License"); you may not
+use this file except in compliance with the License. You may obtain a copy
+of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+License for the specific language governing permissions and limitations
+under the License.

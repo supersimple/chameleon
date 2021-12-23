@@ -10,8 +10,10 @@ defmodule Chameleon.RGB888 do
   Creates a new color struct.
 
   ## Examples
+
       iex> _rgb888 = Chameleon.RGB888.new(25, 30, 80)
       %Chameleon.RGB888{r: 25, g: 30, b: 80}
+
   """
   @spec new(non_neg_integer(), non_neg_integer(), non_neg_integer()) ::
           Chameleon.RGB888.t()

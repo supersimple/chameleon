@@ -10,8 +10,10 @@ defmodule Chameleon.Pantone do
   Creates a new color struct.
 
   ## Examples
+
       iex> _pantone = Chameleon.Pantone.new("30")
       %Chameleon.Pantone{pantone: "30"}
+
   """
   @spec new(String.t()) :: Chameleon.Pantone.t()
   def new(pantone), do: %__MODULE__{pantone: pantone}
