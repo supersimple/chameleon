@@ -28,6 +28,9 @@ Once you have a color, Chameleon can convert that color to another colorspace or
 format:
 
 ```elixir
+iex> mycolor = Chameleon.RGB.new(255, 0, 0)
+%Chameleon.RGB{b: 0, g: 0, r: 255}
+
 iex> Chameleon.convert(mycolor, Chameleon.HSV)
 %Chameleon.HSV{h: 0, s: 100, v: 100}
 
@@ -75,6 +78,7 @@ defimpl Chameleon.Color.RGB do
   def from(your_color_struct), do: MyApp.FancyColor.to_rgb(your_color_struct)
 end
 ```
+
 When Chameleon doesn't find a direct conversion from one color to another, it will attempt to convert through RGB. By supporting RGB conversions, your color type will be convertible between many color types. Of course, color conversion is frequently a lossy operation and you may want to implement more conversion modules.
 
 ## Caveat(s)
@@ -103,9 +107,9 @@ end
 Contributions are welcomed. Please open a pull request or file an issue with your ideas.
 Some ideas would be:
 
-* Add a new color model for conversion
-* Add functionality to generate complementary colors
-* Handle errors for invalid input values
+- Add a new color model for conversion
+- Add functionality to generate complementary colors
+- Handle errors for invalid input values
 
 ## Copyright and License
 
