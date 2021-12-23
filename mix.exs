@@ -2,7 +2,7 @@ defmodule Chameleon.MixProject do
   use Mix.Project
 
   @source_url "https://github.com/supersimple/chameleon"
-  @version "2.3.0"
+  @version "2.3.1"
 
   def project do
     [
