@@ -31,7 +31,7 @@ format:
 iex> Chameleon.RGB.new(255, 0, 0) |> Chameleon.convert(Chameleon.HSV)
 %Chameleon.HSV{h: 0, s: 100, v: 100}
 
-iex> Chameleon.RGB.new(255, 0, 0) |> Chameleon.convert(mycolor, Chameleon.Hex)
+iex> Chameleon.RGB.new(255, 0, 0) |> Chameleon.convert(Chameleon.Hex)
 %Chameleon.Hex{hex: "FF0000"}
 ```
 
