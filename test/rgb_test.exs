@@ -69,6 +69,12 @@ defmodule RGBTest do
       end
     end
 
+    test "verifies HSL to RGB conversions" do
+      assert RGB.new(115, 245, 46) == Chameleon.convert(HSL.new(99, 91, 57), Color.RGB)
+      assert RGB.new(154, 193, 134) == Chameleon.convert(HSL.new(99, 32, 64), Color.RGB)
+      assert RGB.new(149, 134, 193) == Chameleon.convert(HSL.new(255, 32, 64), Color.RGB)
+    end
+
     test "converts from RGB to RGB" do
       for %{hsl: [h, s, l], rgb: [r, g, b]} <- color_table() do
         assert HSL.new(h, s, l) == Chameleon.convert(RGB.new(r, g, b), Color.HSL)
