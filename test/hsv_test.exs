@@ -21,7 +21,10 @@ defmodule HSVTest do
       {RGB.new(0, 128, 0), HSV.new(120, 100, 50)},
       {RGB.new(128, 0, 128), HSV.new(300, 100, 50)},
       {RGB.new(0, 128, 128), HSV.new(180, 100, 50)},
-      {RGB.new(0, 0, 128), HSV.new(240, 100, 50)}
+      {RGB.new(0, 0, 128), HSV.new(240, 100, 50)},
+      {RGB.new(181, 33, 75), HSV.new(343, 82, 71)},
+      {RGB.new(79, 36, 74), HSV.new(307, 54, 31)},
+      {RGB.new(79, 58, 36), HSV.new(31, 54, 31)}
     ]
   end
 
