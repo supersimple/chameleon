@@ -182,7 +182,7 @@ defmodule Chameleon.RGB do
   end
 
   defp hue(delta, _, _, _, _) when delta <= 0, do: 0
-  defp hue(delta, r, r, g, b), do: 60 * rem(round((g - b) / delta), 6)
+  defp hue(delta, r, r, g, b), do: 60 * :math.fmod((g - b) / delta, 6)
   defp hue(delta, g, r, g, b), do: 60 * ((b - r) / delta + 2)
   defp hue(delta, b, r, g, b), do: 60 * ((r - g) / delta + 4)
 
