@@ -55,10 +55,22 @@ defmodule RGBTest do
       end
     end
 
+    test "verifies HSV to RGB conversions" do
+      assert RGB.new(181, 33, 75) == Chameleon.convert(HSV.new(343, 82, 71), Color.RGB)
+      assert RGB.new(79, 36, 74) == Chameleon.convert(HSV.new(307, 54, 31), Color.RGB)
+      assert RGB.new(79, 58, 36) == Chameleon.convert(HSV.new(31, 54, 31), Color.RGB)
+    end
+
     test "converts from RGB to HSV" do
       for %{hsv: [h, s, v], rgb: [r, g, b]} <- color_table() do
         assert HSV.new(h, s, v) == Chameleon.convert(RGB.new(r, g, b), Color.HSV)
       end
+    end
+
+    test "verifies RGB to HSV conversions" do
+      assert HSV.new(343, 82, 71) == Chameleon.convert(RGB.new(181, 33, 75), Color.HSV)
+      assert HSV.new(307, 54, 31) == Chameleon.convert(RGB.new(79, 36, 74), Color.HSV)
+      assert HSV.new(31, 54, 31) == Chameleon.convert(RGB.new(79, 58, 36), Color.HSV)
     end
   end
 
